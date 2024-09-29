@@ -1,7 +1,7 @@
 package com.northcoders.makemydayapi.controller;
 
 
-import com.northcoders.makemydayapi.model.SkiddleEvent;
+import com.northcoders.makemydayapi.model.skiddle.SkiddleEvent;
 import com.northcoders.makemydayapi.service.SkiddleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/skiddle")
-public class Skiddle {
+public class SkiddedController {
 
     @Autowired
     private SkiddleService skiddleService;
