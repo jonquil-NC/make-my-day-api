@@ -3,7 +3,6 @@ package com.northcoders.makemydayapi.jpa.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -13,20 +12,20 @@ import java.time.LocalTime;
 public class Event {
 
     @Id
-    String id;
+    private String id;
     @Id
-    SourceEvent sourceEvent;
+    private SourceEvent sourceEvent;
 
-    String name;
-    String description;
-    EventType type;
-    LocalDate date;
-    LocalTime startTime;
-    LocalTime endTime;
-    Double price;
-    String url;
-    String imageUrl;
-    Double longitude;
-    Double latitude;
+    private String name;
+    private String description;
+    private EventType type;
+    private LocalDate date;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private Double price;
+    private String url;
+    private String imageUrl;
+    private Double longitude;
+    private Double latitude;
 
 }
