@@ -13,8 +13,8 @@ public class SkiddleVenue {
     private String town;
     private String postcode;
     private String country;
-    private BigDecimal latitude;
-    private BigDecimal longitude;
+    private Double latitude;
+    private Double longitude;
     private String type;
 
 }
