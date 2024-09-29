@@ -18,5 +18,6 @@ public enum EventType {
     THEATRE,
     COMEDY,
     KIDS,
-    ARTS
+    ARTS,
+    CLUB
 }
