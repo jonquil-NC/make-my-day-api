@@ -1,4 +1,4 @@
-package com.northcoders.makemydayapi.model;
+package com.northcoders.makemydayapi.model.skiddle;
 
 
 import lombok.Data;
