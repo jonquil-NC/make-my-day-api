@@ -4,7 +4,6 @@ package com.northcoders.makemydayapi.model.skiddle;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @Data

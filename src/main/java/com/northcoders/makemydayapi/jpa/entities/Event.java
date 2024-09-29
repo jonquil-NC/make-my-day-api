@@ -1,6 +1,8 @@
 package com.northcoders.makemydayapi.jpa.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -18,7 +20,7 @@ public class Event {
 
     private String name;
     private String description;
-    private EventType type;
+    private EventType type;    //EventCode in skiddle
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;

@@ -1,4 +1,4 @@
 package com.northcoders.makemydayapi.service;
 
-public class GooglePlacesServiceImpl implements GooglePlacesService{
+public class GooglePlacesServiceImpl implements GooglePlacesService {
 }
