@@ -7,4 +7,6 @@ import java.util.List;
 public interface SkiddleService {
 
     List<SkiddleEvent> getAllEvents();
+
+    void populateDatabase();
 }
