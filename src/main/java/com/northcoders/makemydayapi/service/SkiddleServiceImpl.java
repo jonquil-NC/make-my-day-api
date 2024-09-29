@@ -2,10 +2,9 @@ package com.northcoders.makemydayapi.service;
 
 
 
-import com.northcoders.makemydayapi.model.SkiddleEvent;
-import com.northcoders.makemydayapi.model.SkiddleEventsResult;
+import com.northcoders.makemydayapi.model.skiddle.SkiddleEvent;
+import com.northcoders.makemydayapi.model.skiddle.SkiddleEventsResult;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;

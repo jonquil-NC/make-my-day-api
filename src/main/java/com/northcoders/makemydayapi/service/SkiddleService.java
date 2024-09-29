@@ -1,6 +1,6 @@
 package com.northcoders.makemydayapi.service;
 
-import com.northcoders.makemydayapi.model.SkiddleEvent;
+import com.northcoders.makemydayapi.model.skiddle.SkiddleEvent;
 
 import java.util.List;
 
