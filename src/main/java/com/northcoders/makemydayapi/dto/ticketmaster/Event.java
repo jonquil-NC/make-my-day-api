@@ -1,14 +1,18 @@
 package com.northcoders.makemydayapi.dto.ticketmaster;
 
+import java.util.List;
+
 public class Event {
 
     private String name;
     private String type;
     private String id;
     private List<Image> images;
-    private Sales sales;
+//    may not need Sales as we have dates
+//    private Sales sales;
     private Dates dates;
     private String info;
+    private String priceRanges;
 
     public String getName() {
         return name;
@@ -64,5 +68,13 @@ public class Event {
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    public String getPriceRanges() {
+        return priceRanges;
+    }
+
+    public void setPriceRanges(String priceRanges) {
+        this.priceRanges = priceRanges;
     }
 }
