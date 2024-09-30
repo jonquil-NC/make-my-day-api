@@ -3,12 +3,14 @@ package com.northcoders.makemydayapi.dto.skiddle;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
 @Data
 @Getter
+@NoArgsConstructor
 public class SkiddleEvent {
 
     private String id;
