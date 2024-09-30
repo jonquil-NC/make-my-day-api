@@ -46,13 +46,13 @@ public class Event {
         this.images = images;
     }
 
-    public Sales getSales() {
-        return sales;
-    }
-
-    public void setSales(Sales sales) {
-        this.sales = sales;
-    }
+//    public Sales getSales() {
+//        return sales;
+//    }
+//
+//    public void setSales(Sales sales) {
+//        this.sales = sales;
+//    }
 
     public Dates getDates() {
         return dates;
