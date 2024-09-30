@@ -1,8 +1,11 @@
-package com.northcoders.makemydayapi.model.skiddle;
+package com.northcoders.makemydayapi.dto.skiddle;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
+@Getter
 public class SkiddleVenue {
 
     private Long id;
@@ -14,5 +17,7 @@ public class SkiddleVenue {
     private Double latitude;
     private Double longitude;
     private String type;
+
+
 
 }

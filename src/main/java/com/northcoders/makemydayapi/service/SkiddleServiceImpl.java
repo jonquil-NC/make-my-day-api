@@ -1,13 +1,12 @@
-package com.northcoders.makemydayapi.service.impl;
+package com.northcoders.makemydayapi.service;
 
 
 import com.northcoders.makemydayapi.jpa.entities.Event;
 import com.northcoders.makemydayapi.jpa.entities.EventType;
 import com.northcoders.makemydayapi.jpa.entities.SourceEvent;
 import com.northcoders.makemydayapi.jpa.repositories.EventsRepository;
-import com.northcoders.makemydayapi.model.skiddle.SkiddleEvent;
-import com.northcoders.makemydayapi.model.skiddle.SkiddleEventsResult;
-import com.northcoders.makemydayapi.service.SkiddleService;
+import com.northcoders.makemydayapi.dto.skiddle.SkiddleEvent;
+import com.northcoders.makemydayapi.dto.skiddle.SkiddleEventsResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

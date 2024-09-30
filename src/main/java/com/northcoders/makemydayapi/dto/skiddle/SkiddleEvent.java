@@ -1,12 +1,14 @@
-package com.northcoders.makemydayapi.model.skiddle;
+package com.northcoders.makemydayapi.dto.skiddle;
 
 
 import lombok.Data;
+import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
 @Data
+@Getter
 public class SkiddleEvent {
 
     private String id;

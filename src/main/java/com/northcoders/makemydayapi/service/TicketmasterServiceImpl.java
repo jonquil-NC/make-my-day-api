@@ -1,7 +1,6 @@
-package com.northcoders.makemydayapi.service.impl;
+package com.northcoders.makemydayapi.service;
 
 import com.northcoders.makemydayapi.model.Activity;
-import com.northcoders.makemydayapi.service.TicketmasterService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

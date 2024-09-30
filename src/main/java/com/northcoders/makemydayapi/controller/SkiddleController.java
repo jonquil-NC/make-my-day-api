@@ -1,7 +1,7 @@
 package com.northcoders.makemydayapi.controller;
 
 
-import com.northcoders.makemydayapi.model.skiddle.SkiddleEvent;
+import com.northcoders.makemydayapi.dto.skiddle.SkiddleEvent;
 import com.northcoders.makemydayapi.service.SkiddleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
