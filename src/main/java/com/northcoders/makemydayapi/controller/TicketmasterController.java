@@ -23,4 +23,7 @@ public class TicketmasterController {
         List<Activity> events = ticketmasterService.getAllEvents();
         return new ResponseEntity<>(events, HttpStatus.OK);
     }
+
+
+
 }
