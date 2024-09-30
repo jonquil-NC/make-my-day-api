@@ -1,5 +1,7 @@
 package com.northcoders.makemydayapi.dto.ticketmaster;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Event {
@@ -11,7 +13,11 @@ public class Event {
 //    may not need Sales as we have dates
 //    private Sales sales;
     private Dates dates;
+
+   @SerializedName("info")
     private String info;
+
+//   add PriceRanges class
     private String priceRanges;
 
     public String getName() {
