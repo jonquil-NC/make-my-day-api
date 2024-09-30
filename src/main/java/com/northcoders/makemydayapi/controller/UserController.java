@@ -19,7 +19,7 @@ public class UserController {
     private UserRepository userRepository;
 
     @PostMapping
-    public ResponseEntity<String> signup(@RequestBody User user) {
+    public ResponseEntity<String> signUp(@RequestBody User user) {
         try {
             this.userRepository.save(user);
             return ResponseEntity.status(HttpStatus.CREATED).build();
