@@ -2,8 +2,6 @@ package com.northcoders.makemydayapi.mapper;
 
 import com.northcoders.makemydayapi.dto.skiddle.SkiddleEvent;
 import com.northcoders.makemydayapi.dto.skiddle.SkiddleEventsResult;
-import com.northcoders.makemydayapi.jpa.entities.EventType;
-import com.northcoders.makemydayapi.jpa.entities.SourceEvent;
 import com.northcoders.makemydayapi.model.Activity;
 import com.northcoders.makemydayapi.model.ActivityType;
 import com.northcoders.makemydayapi.model.Location;

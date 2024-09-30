@@ -1,17 +1,15 @@
 package com.northcoders.makemydayapi.service;
 
 
-import com.northcoders.makemydayapi.jpa.entities.Event;
-import com.northcoders.makemydayapi.jpa.entities.EventType;
-import com.northcoders.makemydayapi.jpa.entities.SourceEvent;
-import com.northcoders.makemydayapi.jpa.repositories.EventsRepository;
 import com.northcoders.makemydayapi.dto.skiddle.SkiddleEvent;
 import com.northcoders.makemydayapi.dto.skiddle.SkiddleEventsResult;
 import com.northcoders.makemydayapi.mapper.SkiddleResponseMapper;
 import com.northcoders.makemydayapi.model.Activity;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -19,12 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class SkiddleServiceImpl implements SkiddleService {
 
-    private static final String API_KEY = "6267ce9bfd046dd037f269901a410015";
-    private static final Logger LOG = LoggerFactory.getLogger(SkiddleServiceImpl.class);
-    @Autowired
-    private EventsRepository eventsRepository;
+//    private static final Logger LOG = LoggerFactory.getLogger(SkiddleServiceImpl.class);
+    @Value("${skiddle-api-key}")
+    private String skiddleApiKey;
     private final WebClient webClient;
 
     public SkiddleServiceImpl() {
@@ -36,89 +34,36 @@ public class SkiddleServiceImpl implements SkiddleService {
     }
 
     public List<Activity> getAllEvents() {
+        Integer limit = 100;
+
+        log.info("Retrieving {} events for Skiddler", limit);
+
         SkiddleEventsResult result = this.webClient.get()
-                .uri("/events?limit=100&api_key=" + API_KEY)
+                .uri("/events"
+                        + "?api_key=" + skiddleApiKey
+                        + "&limit=" + limit
+                )
                 .retrieve()
                 .bodyToMono(SkiddleEventsResult.class)
                 .block();
 
         List<SkiddleEvent> skiddleEvents = result.getResults();
 
+        log.info("Retrieved [{} of {}] events from Skiddler", skiddleEvents.size(), result.getTotalcount());
+
         List<Activity> activities = new ArrayList<>();
+
+        log.info("Mapping {} events to an Activity", skiddleEvents.size());
 
         skiddleEvents.forEach(skiddleEvent -> {
             Activity activity = SkiddleResponseMapper.toEntity(skiddleEvent);
             activities.add(activity);
         });
 
+        log.info("Mapped {} events to an Activity", activities.size());
+
         return activities;
     }
-
-//    public List<SkiddleEvent> getAllEvents() {
-//
-//        LOG.info("Retrieving all events for Skiddler");
-//
-//        SkiddleEventsResult result = this.webClient.get()
-//                .uri("/events?limit=100&api_key=" + API_KEY)
-//                .retrieve()
-//                .bodyToMono(SkiddleEventsResult.class)
-//                .block();
-//
-//        LOG.info("Retrieved [{} of {}] events from Skiddler", result.getResults().size(), result.getTotalcount());
-//        return result.getResults();
-//    }
-
-//    public void populateDatabase() {
-//        List<SkiddleEvent> eventList = this.getAllEvents();
-//
-//        // Map from SkiddleEvent to Event (from Entities)
-//        List<Event> databaseEventList = eventList.stream()
-//                .map(skiddleEvent -> {
-//                    Event event = new Event();
-//                    event.setId(skiddleEvent.getId());
-//                    event.setSourceEvent(SourceEvent.SKIDDLE);
-//                    event.setName(skiddleEvent.getEventname());
-//                    event.setDescription(skiddleEvent.getDescription());
-//                    event.setDate(skiddleEvent.getDate());
-//                    event.setStartTime(skiddleEvent.getStartdate().toLocalTime());
-//                    event.setEndTime(skiddleEvent.getEnddate().toLocalTime());
-//                    event.setPrice(null);
-//                    event.setUrl(skiddleEvent.getLink());
-//                    event.setImageUrl(skiddleEvent.getImageurl());
-//                    event.setLatitude(skiddleEvent.getVenue().getLatitude());
-//                    event.setLongitude(skiddleEvent.getVenue().getLongitude());
-//
-//                    //Set Type
-//                    if(skiddleEvent.getEventCode() == null) {
-//                        event.setType(EventType.EVENT);
-//                    } else {
-//                        switch (skiddleEvent.getEventCode()) {
-//                            case "SPORT" -> event.setType(EventType.SPORTS);
-//                            case "ARTS" -> event.setType(EventType.ARTS);
-//                            case "FEST" -> event.setType(EventType.FESTIVAL);
-//                            case "LIVE" -> event.setType(EventType.LIVE);
-//                            case "CLUB" -> event.setType(EventType.CLUB);
-//                            case "DATE" -> event.setType(EventType.DATING);
-//                            case "THEATRE" -> event.setType(EventType.THEATRE);
-//                            case "COMEDY" -> event.setType(EventType.COMEDY);
-//                            case "EXHIB" -> event.setType(EventType.EXHIBITION);
-//                            case "KIDS" -> event.setType(EventType.KIDS);
-//                            case "BARPUB" -> event.setType(EventType.BAR);
-//                            case "LGB" -> event.setType(EventType.LGBT);
-//                            default -> event.setType(EventType.EVENT);
-//                        }
-//                    }
-//
-//                    return event;
-//                })
-//                .toList();
-//
-//        LOG.info("Map completed. Result: {}", databaseEventList);
-//
-//        this.eventsRepository.saveAll(databaseEventList);
-//    }
-
-
 }
 
 
