@@ -18,9 +18,10 @@ public class Activity {
     Location location;
     boolean isOutdoor;
     ActivityType activityType;
-    String price;
+    String price; // nullable
     LocalDate date;
     LocalTime startTime;
     LocalTime endTime;
     ResourceType resourceType;
+    String imageUrl;
 }
