@@ -21,7 +21,7 @@ public class SkiddleResponseMapper {
 
         Activity activity = Activity.builder()
 //                .id()
-                .apiId(skiddleEvent.getId())
+//                .apiId(skiddleEvent.getId())
                 .name(skiddleEvent.getEventname())
                 .description(skiddleEvent.getDescription())
 //                .createdDate()
@@ -37,7 +37,7 @@ public class SkiddleResponseMapper {
                 .startTime(skiddleEvent.getStartdate().toLocalTime())
                 .endTime(skiddleEvent.getEnddate().toLocalTime())
                 .resourceType(ResourceType.SKIDDLE)
-                .imageUrl(skiddleEvent.getImageurl())
+//                .imageUrl(skiddleEvent.getImageurl())
                 .build();
 
         return activity;
