@@ -1,31 +1,16 @@
 package com.northcoders.makemydayapi.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.northcoders.makemydayapi.dto.skiddle.SkiddleEventsResult;
 import com.northcoders.makemydayapi.dto.ticketmaster.Event;
 import com.northcoders.makemydayapi.dto.ticketmaster.TicketmasterResponse;
 import com.northcoders.makemydayapi.mapper.TicketmasterResponseMapper;
 import com.northcoders.makemydayapi.model.Activity;
-import com.northcoders.makemydayapi.model.ActivityType;
-import com.northcoders.makemydayapi.model.Location;
-import com.northcoders.makemydayapi.model.ResourceType;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Service
 @Slf4j
