@@ -31,7 +31,6 @@ import java.util.logging.Logger;
 @Slf4j
 public class TicketmasterServiceImpl implements TicketmasterService {
 
-    private static final String API_KEY = "4Ot8mYGAjvNRHjVdQDkN0bqJxG4BrHGE";
     private static final String BASE_URL = "https://app.ticketmaster.com/discovery/v2";
     private static final String LONDON_LAT = "51.5074";
     private static final String LONDON_LON = "-0.1278";
