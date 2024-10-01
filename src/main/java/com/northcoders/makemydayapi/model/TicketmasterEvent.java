@@ -2,9 +2,8 @@ package com.northcoders.makemydayapi.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Date;
+public class TicketmasterEvent {
 
-public class Event {
     @JsonProperty
     String name;
 
@@ -17,7 +16,7 @@ public class Event {
     @JsonProperty
     String venueName;
 
-    public Event(String name, String dateTime, String imageUrl, String venueName) {
+    public TicketmasterEvent(String name, String dateTime, String imageUrl, String venueName) {
         this.name = name;
         this.dateTime = dateTime;
         this.imageUrl = imageUrl;

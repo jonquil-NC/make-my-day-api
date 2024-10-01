@@ -2,7 +2,7 @@ package com.northcoders.makemydayapi.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.northcoders.makemydayapi.model.Event;
+import com.northcoders.makemydayapi.model.TicketmasterEvent;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -15,13 +15,13 @@ import java.util.List;
 @Service
 public class TicketmasterService {
 
-    public List<Event> getAllEvents() {
+    public List<TicketmasterEvent> getAllEvents() {
 
-        List<Event> allEvents = new ArrayList<>();
+        List<TicketmasterEvent> allEvents = new ArrayList<>();
 
         OkHttpClient client = new OkHttpClient();
-        String endpoint = "https://app.ticketmaster.com/discovery/v2/events" +
-                "?apikey=4Ot8mYGAjvNRHjVdQDkN0bqJxG4BrHGE&locale=en-us";
+        String endpoint = "https://app.ticketmaster.com/discovery/v2/events.json" +
+                "?countryCode=GB&apikey=4Ot8mYGAjvNRHjVdQDkN0bqJxG4BrHGE&locale=en-us";
         Request request = new Request.Builder()
                 .url(endpoint)
                 .build();
@@ -42,9 +42,9 @@ public class TicketmasterService {
                         .concat(currentEvent.get("dates").get("start").get("localTime").asText())
                         .concat("Z");
                 imageUrl = currentEvent.get("images").get(0).get("url").asText();
-                venueName = currentEvent.get("_embedded").get("venues").get(0).get("name").asText();
+                venueName = currentEvent.get("_embedded").get("venues").get(0).get("address").get("line1").asText();
 
-                Event event = new Event(name, dateTime, imageUrl, venueName);
+                TicketmasterEvent event = new TicketmasterEvent(name, dateTime, imageUrl, venueName);
                 allEvents.add(event);
             }
         } catch (IOException e){
