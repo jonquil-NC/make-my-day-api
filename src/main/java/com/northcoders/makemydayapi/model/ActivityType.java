@@ -10,5 +10,14 @@ public enum ActivityType {
     MUSEUM,
     EXHIBITION,
     MEETUP,
-    SPORTS
+    SPORTS,
+    FESTIVAL,
+    LIVE,
+    DATING,
+    LGBT,
+    THEATRE,
+    COMEDY,
+    KIDS,
+    ARTS,
+    CLUB
 }
