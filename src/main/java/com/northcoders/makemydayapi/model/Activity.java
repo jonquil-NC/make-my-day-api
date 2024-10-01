@@ -16,7 +16,6 @@ import java.util.Date;
 public class Activity {
 
     Long id;
-    String apiId;
     String name;
     String description; //if it does not exist for all APIs create a custom one based on the type of activity
     Date createdDate;
@@ -24,10 +23,9 @@ public class Activity {
     Location location;
     boolean isOutdoor;
     ActivityType activityType;
-    String price; // nullable
+    String price;
     LocalDate date;
     LocalTime startTime;
     LocalTime endTime;
     ResourceType resourceType;
-    String imageUrl;
 }
