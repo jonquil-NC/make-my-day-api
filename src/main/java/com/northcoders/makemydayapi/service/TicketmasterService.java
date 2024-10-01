@@ -5,8 +5,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+
 public interface TicketmasterService{
 
     List<Activity> getAllEvents();
+
+    void populateDatabase();
 }
