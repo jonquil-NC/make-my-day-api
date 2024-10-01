@@ -2,7 +2,6 @@ package com.northcoders.makemydayapi.dto.ticketmaster;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import jakarta.persistence.Embedded;
 
 import java.util.List;
 

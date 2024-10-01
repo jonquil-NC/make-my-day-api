@@ -2,16 +2,23 @@ package com.northcoders.makemydayapi.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.northcoders.makemydayapi.dto.skiddle.SkiddleEventsResult;
+import com.northcoders.makemydayapi.dto.ticketmaster.Event;
+import com.northcoders.makemydayapi.dto.ticketmaster.TicketmasterResponse;
+import com.northcoders.makemydayapi.mapper.TicketmasterResponseMapper;
 import com.northcoders.makemydayapi.model.Activity;
 import com.northcoders.makemydayapi.model.ActivityType;
 import com.northcoders.makemydayapi.model.Location;
 import com.northcoders.makemydayapi.model.ResourceType;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -21,81 +28,53 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @Service
+@Slf4j
 public class TicketmasterServiceImpl implements TicketmasterService {
 
     private static final String API_KEY = "4Ot8mYGAjvNRHjVdQDkN0bqJxG4BrHGE";
-    private static final String API_URL = "https://app.ticketmaster.com/discovery/v2/events";
+    private static final String BASE_URL = "https://app.ticketmaster.com/discovery/v2";
     private static final String LONDON_LAT = "51.5074";
     private static final String LONDON_LON = "-0.1278";
-    private static final Logger LOG = LoggerFactory.getLogger(TicketmasterServiceImpl.class);
 
+    @Value("${ticketmaster-api-key}")
+    private String ticketmasterApiKey;
+    private final WebClient webClient;
 
-//    @Autowired
-//    private EventsRepository eventsRepository;
+    public TicketmasterServiceImpl() {
+        this.webClient = WebClient.builder()
+                .baseUrl(BASE_URL)
+                .defaultHeader("Accept", "application/json")
+                .build();
+    }
 
-    private final OkHttpClient httpClient = new OkHttpClient();
 
     @Override
     public List<Activity> getAllEvents() {
+        log.info("Retrieving {} events for Ticketmaster", "all");
+
+        TicketmasterResponse result = this.webClient.get()
+                .uri("/events"
+                        + "?apikey=" + ticketmasterApiKey
+                        + "&latlong=" + LONDON_LAT + "," + LONDON_LON
+                )
+                .retrieve()
+                .bodyToMono(TicketmasterResponse.class)
+                .block();
+
+        List<Event> ticketmasterEvents = result.get_embedded().getEvents();
+
+        log.info("Retrieved {} events for Ticketmaster", ticketmasterEvents.size());
+
         List<Activity> activities = new ArrayList<>();
 
-        //API request URL
-        String url = API_URL + "?apikey=" + API_KEY + "&latlong=" + LONDON_LAT + "," + LONDON_LON;
+        log.info("Mapping {} events to an Activity", ticketmasterEvents.size());
 
-        Request request = new Request.Builder().url(url).build();
+        ticketmasterEvents.forEach(ticketMasterEvent -> {
+            Activity activity = TicketmasterResponseMapper.toEntity(ticketMasterEvent);
+            activities.add(activity);
+        });
 
-        try (Response response = httpClient.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                throw new IOException("Failed to call Ticketmaster API");
-            }
-
-            //Response
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode responseBody = mapper.readTree(response.body().string());
-            JsonNode eventNodes = responseBody.get("_embedded").get("events");
-
-            //Response to Activity object
-            for (JsonNode eventNode : eventNodes) {
-                Activity activity = new Activity();
-                activity.setName(eventNode.get("name").asText());
-                activity.setDescription(eventNode.has("info") ? eventNode.get("info").asText() : "No description available");
-
-                if (eventNode.get("dates").has("start")) {
-                    LocalDate date = LocalDate.parse(eventNode.get("dates").get("start").get("localDate").asText());
-                    LocalTime startTime = LocalTime.parse(eventNode.get("dates").get("start").get("localTime").asText());
-                    activity.setDate(date);
-                    activity.setStartTime(startTime);
-                }
-
-                //Location class
-                Location location = new Location();
-                location.setLatitude(eventNode.get("_embedded").get("venues").get(0).get("location").get("latitude").asDouble());
-                location.setLongitude(eventNode.get("_embedded").get("venues").get(0).get("location").get("longitude").asDouble());
-                activity.setLocation(location);
-
-                //Price from Ticketmaster or null
-                if (eventNode.has("priceRanges")) {
-                    activity.setPrice(eventNode.get("priceRanges").get(0).get("min").asText());
-                } else {
-                    activity.setPrice(null);  //null if not available
-                }
-
-                //Activity type
-//                try {
-//                    activity.setActivityType(ActivityType.valueOf(keyword.toUpperCase()));
-//                } catch (IllegalArgumentException e) {
-//                    activity.setActivityType(ActivityType.EVENT); // Default to EVENT if the keyword doesn't match
-//                }
-
-                //Resource: Ticketmaster
-                activity.setResourceType(ResourceType.TICKETMASTER);
-
-                activities.add(activity);
-            }
-
-        } catch (IOException e) {
-            LOG.error("Error occurred while fetching events from Ticketmaster", e);
-        }
+        log.info("Mapped {} events to an Activity", activities.size());
 
         return activities;
     }

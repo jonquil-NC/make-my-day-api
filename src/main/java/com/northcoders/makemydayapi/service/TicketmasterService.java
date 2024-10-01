@@ -6,9 +6,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 
-public interface TicketmasterService{
+public interface TicketmasterService {
 
     List<Activity> getAllEvents();
 
-    void populateDatabase();
 }
