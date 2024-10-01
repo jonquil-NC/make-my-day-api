@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class RestaurantService {
@@ -37,7 +38,10 @@ public class RestaurantService {
 
         List<GeoapifyRestaurant> restaurants = new ArrayList<>();
 
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .readTimeout(0, TimeUnit.SECONDS)
+                .build();
+
         String endpoint = "https://api.geoapify.com/v2/places?categories=catering&filter=circle:"
                 +LONGITUDE+","+LATITUDE+","+radius+"&limit="+resultsLimit+"&apiKey="+API_KEY;
 
@@ -45,7 +49,6 @@ public class RestaurantService {
                 .url(endpoint)
                 .header("User-Agent", "OkHttp Headers.java")
                 .addHeader("Content-Type", "application/json")
-//                .addHeader("Accept", "application/json; q=0.5")
                 .build();
 
         String jsonBodyString = null;
@@ -76,12 +79,50 @@ public class RestaurantService {
             System.out.println("Service 2) Instantiating the restaurants");
 
             for (JsonNode restaurant : filteredRestaurants) {
+                address=null;
                 name = restaurant.get("name").asText();
-                address = restaurant.get("formatted").asText();
-                imageUrl = restaurant.get("datasource").get("raw").get("image").asText();
-                phoneNumber = restaurant.get("datasource").get("raw").get("phone").asText();
-                openingHours = restaurant.get("datasource").get("raw").get("openingHours").asText();
-                restaurants.add(new GeoapifyRestaurant(name, address, imageUrl, phoneNumber, openingHours));
+                JsonNode auxiliaryData = restaurant.get("datasource").get("raw");
+
+                System.out.println("Service 3) For filter " + type + " got " + name);
+
+                // The address may be found at different locations in the JSON
+                try {
+                    address = restaurant.get("formatted").asText()
+                            .replace(", United Kingdom", "")
+                            .replace("London, ", "");
+                    if (address.contains(name)) address = address.replace(name+", ", "");
+                } catch (NullPointerException e) {;}
+                if (address==null){
+                    try {
+                        address = restaurant.get("street").asText()+", "+restaurant.get("postcode").asText();
+                    } catch (NullPointerException e) {;}
+                if (address==null){
+                    try {
+                        address = auxiliaryData.get("addr:street").asText()+", "+auxiliaryData.get("addr:postcode").asText();
+                    } catch (NullPointerException e){;}
+                }
+                }
+
+                try {
+                    imageUrl = auxiliaryData.get("image").asText();
+                } catch (NullPointerException e) {
+                    imageUrl = null;
+                }
+                try {
+                    phoneNumber = auxiliaryData.get("phone").asText();
+                } catch (NullPointerException e) {
+                    phoneNumber = null;
+                }
+                try {
+                    openingHours = auxiliaryData.get("opening_hours").asText();
+                } catch (NullPointerException e) {
+                    openingHours = null;
+                }
+                GeoapifyRestaurant geoapifyRestaurant = new GeoapifyRestaurant(
+                        name, address, imageUrl, phoneNumber, openingHours
+                );
+                System.out.println(geoapifyRestaurant);
+                restaurants.add(geoapifyRestaurant);
             }
         }
         return restaurants;

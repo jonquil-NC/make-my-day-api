@@ -68,7 +68,11 @@ public class RestaurantsFilter {
                 try {
                     cuisineField = jsonRestaurant.get("catering").get("cuisine");
                 } catch (NullPointerException e) {;}
-
+                if (cuisineField == null) {
+                    try {
+                        cuisineField = jsonRestaurant.get("catering").get("");
+                    } catch (NullPointerException e) {;}
+                }
                 if (cuisineField != null) {
                     satisfiesSearchQuery = filter(type, cuisineField);
                 } else {
@@ -78,7 +82,7 @@ public class RestaurantsFilter {
                         index++;
                     }
                 }
-                if (satisfiesSearchQuery) filteredRestaurants.add(jsonRestaurant);
+                if (satisfiesSearchQuery) filteredRestaurants.add(restaurantBody);
             }
         }
         return filteredRestaurants;
