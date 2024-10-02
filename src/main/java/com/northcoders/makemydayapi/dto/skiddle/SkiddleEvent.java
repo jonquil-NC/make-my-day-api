@@ -27,4 +27,33 @@ public class SkiddleEvent {
     private ZonedDateTime startdate;
     private ZonedDateTime enddate;
 
+    //    added entryPrice to be able to filter by price
+    private String entryPrice;
+
+public String getEventDetails() {
+
+    String venueName = "Venue unavailable";
+    String price = "Price unavailable";
+    String eventDate = "Date unavailable";
+
+    if (venue != null) {
+        venueName = venue.getName();
+    }
+
+    if (price != null) {
+        price = entryPrice;
+    }
+
+    if(eventDate != null) {
+        eventDate = date.toString();
+    }
+
+    return String.format("Event: %s\nDate: %s\nVenue: %s\nEntry Price: %s",
+            eventname,
+            eventDate,
+            venueName,
+            price);
+
+}
+
 }
