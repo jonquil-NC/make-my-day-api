@@ -28,11 +28,11 @@ public class ActivityController {
     private TicketmasterService ticketmasterService;
 
 //    google places activities endpoint
-    @GetMapping("/google-places")
-    public ResponseEntity<List<Activity>> getGooglePlacesActivities() {
-        List<Activity> activities = googlePlacesService.getAllPlaces();
-        return new ResponseEntity<>(activities, HttpStatus.OK);
-    }
+//    @GetMapping("/google-places")
+//    public ResponseEntity<List<Activity>> getGooglePlacesActivities() {
+//        List<Activity> activities = googlePlacesService.getAllPlaces();
+//        return new ResponseEntity<>(activities, HttpStatus.OK);
+//    }
 
     //    skiddle activities endpoint
 @GetMapping("/skiddle")
