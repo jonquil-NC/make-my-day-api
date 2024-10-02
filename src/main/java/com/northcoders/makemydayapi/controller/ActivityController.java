@@ -46,6 +46,6 @@ public class ActivityController {
     public ResponseEntity<List<Activity>> getTicketmasterActivities(){
         List<Activity> activities = ticketmasterService.getAllEvents();
         return new ResponseEntity<>(activities, HttpStatus.OK);
-}
+    }
 
 }
