@@ -1,6 +1,7 @@
 package com.northcoders.makemydayapi.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.northcoders.makemydayapi.dto.skiddle.SkiddleVenue;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -54,6 +55,9 @@ public class Activity {
 
     @SerializedName("resource_type")
     ResourceType resourceType;
+
+    @SerializedName("venue")
+    SkiddleVenue venue;
 
     public Long getId() {
         return id;
@@ -157,5 +161,13 @@ public class Activity {
 
     public void setResourceType(ResourceType resourceType) {
         this.resourceType = resourceType;
+    }
+
+    public SkiddleVenue getVenue() {
+        return venue;
+    }
+
+    public void setVenue(SkiddleVenue venue) {
+        this.venue = venue;
     }
 }

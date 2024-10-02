@@ -13,8 +13,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -64,6 +66,32 @@ public class SkiddleServiceImpl implements SkiddleService {
 
         return activities;
     }
+
+    @Override
+    public List<Activity> getEventsByDate(LocalDate date) {
+       List<Activity> allEvents = getAllEvents();
+       return allEvents.stream()
+               .filter(event -> event.getDate() != null && event.getDate().equals(date))
+               .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Activity> getEventsByVenue(String venueName) {
+        List<Activity> allEvents = getAllEvents();
+        return allEvents.stream()
+                .filter(event -> event.getVenue() != null)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Activity> getEventsByPrice(String price) {
+        List<Activity> allEvents = getAllEvents();
+        return allEvents.stream()
+                .filter(event -> event.getPrice() != null)
+                .collect(Collectors.toList());
+    }
+
+
 }
 
 
