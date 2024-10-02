@@ -1,4 +1,11 @@
 package com.northcoders.makemydayapi.service;
 
-public interface SkiddleService{
+import com.northcoders.makemydayapi.model.Activity;
+
+import java.util.List;
+
+public interface SkiddleService {
+
+    List<Activity> getAllEvents();
+
 }

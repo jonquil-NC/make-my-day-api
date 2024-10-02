@@ -1,4 +1,13 @@
 package com.northcoders.makemydayapi.service;
 
-public interface TicketmasterService{
+import com.northcoders.makemydayapi.model.Activity;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+
+public interface TicketmasterService {
+
+    List<Activity> getAllEvents();
+
 }
