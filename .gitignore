@@ -35,5 +35,4 @@ build/
 ### Custom ###
 *.properties
 *.txt
-*.json
 *.png
