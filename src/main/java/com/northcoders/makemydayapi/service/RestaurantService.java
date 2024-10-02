@@ -10,6 +10,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -20,16 +21,8 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class RestaurantService {
 
-    @Value("${api.key}")
-    private String API_KEY;
-
-    // St Paul's Cathedral
-    private final String LATITUDE = "51.5138438";
-    private final String LONGITUDE = "-0.13955";
-
-    // 10 kilometre radius
-    private String radius = "10000";
-    private String resultsLimit = "300";
+    @Value("classpath:geoapify-restaurants.json")
+    Resource geoapifyRestaurants;
 
     @Autowired
     RestaurantsFilter restaurantsFilter;
@@ -38,33 +31,12 @@ public class RestaurantService {
 
         List<GeoapifyRestaurant> restaurants = new ArrayList<>();
 
-        OkHttpClient client = new OkHttpClient.Builder()
-                .readTimeout(0, TimeUnit.SECONDS)
-                .build();
-
-        String endpoint = "https://api.geoapify.com/v2/places?categories=catering&filter=circle:"
-                +LONGITUDE+","+LATITUDE+","+radius+"&limit="+resultsLimit+"&apiKey="+API_KEY;
-
-        Request request = new Request.Builder()
-                .url(endpoint)
-                .header("User-Agent", "OkHttp Headers.java")
-                .addHeader("Content-Type", "application/json")
-                .build();
-
         String jsonBodyString = null;
-
-        try (Response response = client.newCall(request).execute()) {
-            System.out.println("Service 1) Http request executed");
-            jsonBodyString = response.body().string();
-        } catch (IOException e) {
-            System.err.println("Error making http request " + e.getMessage());
-            return restaurants;
-        }
 
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonBody = null;
         try {
-            jsonBody = mapper.readTree(jsonBodyString);
+            jsonBody = mapper.readTree(geoapifyRestaurants.getInputStream());
         } catch (Exception e) {
             System.err.println("Error mapping Json response: " + e.getMessage());
             return restaurants;
