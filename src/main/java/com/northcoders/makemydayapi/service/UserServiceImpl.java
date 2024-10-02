@@ -55,15 +55,22 @@ public class UserServiceImpl implements UserService{
 
         String encryptedPassword = passwordEncoder.encode(authRequestDTO.getPassword());
 
-        User user = User.builder()
-                .firstname(authRequestDTO.getFirstname())
-                .lastname(authRequestDTO.getLastname())
-                .email(authRequestDTO.getEmail())
-                .password(encryptedPassword)
-                .build();
+//        User user = User.builder()
+//                .firstname(authRequestDTO.getFirstname())
+//                .lastname(authRequestDTO.getLastname())
+//                .email(authRequestDTO.getEmail())
+//                .password(encryptedPassword)
+//                .build();
+
+        User user = new User();
+        user.setFirstname(authRequestDTO.getFirstname());
+        user.setLastname(authRequestDTO.getLastname());
+        user.setEmail(authRequestDTO.getEmail());
+        user.setPassword(encryptedPassword);
 
         userRepository.save(user);
 
+        System.out.println("User: " + user.getFirstname());
         return new UserInfoDTO(user.getFirstname(), user.getLastname(), user.getEmail());
     }
 }
