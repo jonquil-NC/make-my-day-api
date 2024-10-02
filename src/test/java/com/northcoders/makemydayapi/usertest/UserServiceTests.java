@@ -7,6 +7,7 @@ import com.northcoders.makemydayapi.mapper.AuthRequestMapper;
 import com.northcoders.makemydayapi.model.User;
 import com.northcoders.makemydayapi.repository.UserRepository;
 import com.northcoders.makemydayapi.service.UserServiceImpl;
+import com.northcoders.makemydayapi.validator.AuthRequestValidator;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -32,10 +33,13 @@ public class UserServiceTests {
     @Mock
     PasswordEncoder passwordEncoder;
 
+    @Mock
+    private AuthRequestValidator authRequestValidator;
+
     @Test
     public void signUp_whenUserDoesNotExist_shouldCreateUserAndReturnUserInfoDTO() {
 
-        var request = new AuthRequestDTO("John", "Doe", "john_doe@gmail.com", "password");
+        var request = new AuthRequestDTO("John", "Doe", "john_doe@gmail.com", "AcsC508pS8$8r5H14Ii");
 
         var expectedResult = new UserInfoDTO("John", "Doe", "john_doe@gmail.com");
 
@@ -57,9 +61,9 @@ public class UserServiceTests {
     @Test
     public void signUp_whenUserAlreadyExists_shouldThrowUserAlreadyExistsException() {
 
-        var request = new AuthRequestDTO("John", "Doe", "john_doe@gmail.com", "password");
+        var request = new AuthRequestDTO("John", "Doe", "john_doe@gmail.com", "AcsC508pS8$8r5H14Ii");
 
-        var existingUser = new User(1L, "Murphy", "Denny", "john_doe@gmail.com", "password");
+        var existingUser = new User(1L, "Murphy", "Denny", "john_doe@gmail.com", "AcsC508pS8$8r5H14Ii");
 
         when(mockUserRepository.findByEmail(request.getEmail())).thenReturn(Optional.of(existingUser));
 
