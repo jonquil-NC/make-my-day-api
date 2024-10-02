@@ -1,6 +1,7 @@
 package com.northcoders.makemydayapi.dto.skiddle;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,8 @@ public class SkiddleEvent {
     private String xlargeimageurl;
     private String xlargeimageurlWebP;
     private String link;
-    private String EventCode;
+    @JsonProperty(value = "EventCode")
+    private String eventCode;
     private LocalDate date;
     private ZonedDateTime startdate;
     private ZonedDateTime enddate;

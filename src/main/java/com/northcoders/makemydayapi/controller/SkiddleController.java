@@ -24,17 +24,6 @@ public class SkiddleController {
     private SkiddleService skiddleService;
 
     @GetMapping("/events")
-    public ResponseEntity<List<Activity>> getAllEvents() {
-        try {
-            List<Activity> skiddleEvents = skiddleService.getAllEvents();
-
-            return new ResponseEntity<>(skiddleEvents, HttpStatus.OK);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
-        }
-    }
-
-    @GetMapping("/events")
     public ResponseEntity<List<Activity>> getEventsByActivityType(@RequestParam @ValidSkiddleActivityType ActivityType activityType) {
 
         List<Activity> filteredSkiddleEvents = skiddleService.getEventsByActivityType(activityType);

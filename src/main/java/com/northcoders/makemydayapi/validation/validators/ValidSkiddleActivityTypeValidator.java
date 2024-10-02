@@ -17,15 +17,18 @@ public class ValidSkiddleActivityTypeValidator implements ConstraintValidator<Va
     }
 
     private static boolean isValidSkiddleActivityType(ActivityType activityType) {
-        boolean isValidSkiddleActivityType = activityType.equals(ActivityType.FESTIVAL)
+        boolean isValidSkiddleActivityType = activityType.equals(ActivityType.FEST)
                 || activityType.equals(ActivityType.LIVE)
-                || activityType.equals(ActivityType.DATING)
-                || activityType.equals(ActivityType.LGBT)
+                || activityType.equals(ActivityType.CLUB)
+                || activityType.equals(ActivityType.DATE)
                 || activityType.equals(ActivityType.THEATRE)
                 || activityType.equals(ActivityType.COMEDY)
+                || activityType.equals(ActivityType.EXHIB)
                 || activityType.equals(ActivityType.KIDS)
-                || activityType.equals(ActivityType.ARTS)
-                || activityType.equals(ActivityType.CLUB);
+                || activityType.equals(ActivityType.BARPUB)
+                || activityType.equals(ActivityType.LGB)
+                || activityType.equals(ActivityType.SPORT)
+                || activityType.equals(ActivityType.ARTS);
 
         return isValidSkiddleActivityType;
     }
