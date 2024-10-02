@@ -1,10 +1,10 @@
-package com.northcoders.makemydayapi.model;
+package com.northcoders.makemydayapi.dto.geoapify;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 
 @Builder
-public class GeoapifyRestaurant {
+public class Restaurant {
 
     @JsonProperty
     String name;
@@ -17,7 +17,7 @@ public class GeoapifyRestaurant {
     @JsonProperty
     String openingHours;
 
-    public GeoapifyRestaurant(String name, String address, String imageUrl, String phoneNumber, String openingHours) {
+    public Restaurant(String name, String address, String imageUrl, String phoneNumber, String openingHours) {
         this.name = name;
         this.address = address;
         this.imageUrl = imageUrl;

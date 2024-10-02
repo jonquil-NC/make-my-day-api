@@ -2,7 +2,7 @@ package com.northcoders.makemydayapi.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.northcoders.makemydayapi.model.GeoapifyRestaurant;
+import com.northcoders.makemydayapi.dto.geoapify.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -19,9 +19,9 @@ public class RestaurantService {
     @Autowired
     RestaurantsFilter restaurantsFilter;
 
-    public List<GeoapifyRestaurant> getRestaurants(String type){
+    public List<Restaurant> getRestaurants(String type){
 
-        List<GeoapifyRestaurant> restaurants = new ArrayList<>();
+        List<Restaurant> restaurants = new ArrayList<>();
 
         String jsonBodyString = null;
 
@@ -40,14 +40,10 @@ public class RestaurantService {
             List<JsonNode> filteredRestaurants = restaurantsFilter.process(type, jsonRestaurants);
             String name, address, imageUrl, phoneNumber, openingHours;
 
-            System.out.println("Service 2) Instantiating the restaurants");
-
             for (JsonNode restaurant : filteredRestaurants) {
                 address=null;
                 name = restaurant.get("name").asText();
                 JsonNode auxiliaryData = restaurant.get("datasource").get("raw");
-
-                System.out.println("Service 3) For filter " + type + " got " + name);
 
                 // The address may be found at different locations in the JSON
                 try {
@@ -82,10 +78,9 @@ public class RestaurantService {
                 } catch (NullPointerException e) {
                     openingHours = null;
                 }
-                GeoapifyRestaurant geoapifyRestaurant = new GeoapifyRestaurant(
+                Restaurant geoapifyRestaurant = new Restaurant(
                         name, address, imageUrl, phoneNumber, openingHours
                 );
-                System.out.println(geoapifyRestaurant);
                 restaurants.add(geoapifyRestaurant);
             }
         }

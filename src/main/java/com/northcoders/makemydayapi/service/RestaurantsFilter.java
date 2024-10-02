@@ -1,10 +1,7 @@
 package com.northcoders.makemydayapi.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.northcoders.makemydayapi.model.GeoapifyRestaurant;
-import com.northcoders.makemydayapi.model.RestaurantType;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;

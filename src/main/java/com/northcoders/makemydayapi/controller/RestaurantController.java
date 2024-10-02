@@ -1,6 +1,6 @@
 package com.northcoders.makemydayapi.controller;
 
-import com.northcoders.makemydayapi.model.GeoapifyRestaurant;
+import com.northcoders.makemydayapi.dto.geoapify.Restaurant;
 import com.northcoders.makemydayapi.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,13 +14,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/geoapify/restaurants")
-public class GeoapifyController {
+public class RestaurantController {
 
     @Autowired
     RestaurantService restaurantService;
 
     @GetMapping("{type}")
-    public ResponseEntity<List<GeoapifyRestaurant>> getGeoapifyRestaurants(@PathVariable String type) {
+    public ResponseEntity<List<Restaurant>> getGeoapifyRestaurants(@PathVariable String type) {
         return new ResponseEntity<>(restaurantService.getRestaurants(type), HttpStatus.OK);
     }
 
