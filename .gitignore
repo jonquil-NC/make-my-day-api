@@ -34,11 +34,4 @@ build/
 
 ### Custom ###
 *.properties
-
-echo "# make-my-day-api" >> README.md
-git init
-git add .
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/jonquil-NC/make-my-day-api.git
-git push -u origin main
+*.png
