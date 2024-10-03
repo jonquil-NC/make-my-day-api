@@ -12,6 +12,8 @@ public class Event {
 
     private String priceRanges;
 
+    private String type;
+
     public String getName() {
         return name;
     }
@@ -45,5 +47,13 @@ public class Event {
 
     public void setPriceRanges(String priceRanges) {
         this.priceRanges = priceRanges;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
