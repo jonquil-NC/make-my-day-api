@@ -9,6 +9,8 @@ import com.northcoders.makemydayapi.model.ResourceType;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+//import static com.northcoders.makemydayapi.mapper.SkiddleResponseMapper.getActivityType;
+
 public class TicketmasterResponseMapper {
     private static final String LONDON_LAT = "51.5074";
     private static final String LONDON_LON = "-0.1278";
@@ -20,27 +22,27 @@ public class TicketmasterResponseMapper {
                 .build();
 
         Activity activity = Activity.builder()
-//                .id()
-//                .apiId(ticketmasterEvent.getId())
                 .name(ticketmasterEvent.getName())
                 .description(null)
-//                .createdDate()
-//                .updatedDate()
                 .location(venueLocation)
                 .isOutdoor(false) // ??
-                .activityType(getActivityType())
+                .activityType(getActivityType(ticketmasterEvent))
                 .price(null) // nullable
                 .date(LocalDate.parse(ticketmasterEvent.getDates().getStart().getLocalDate()))
                 .startTime(LocalTime.parse(ticketmasterEvent.getDates().getStart().getLocalTime()))
 //                .endTime(LocalTime.parse(ticketmasterEvent.getDates().getEnd().getLocalTime()))
                 .resourceType(ResourceType.TICKETMASTER)
-//                .imageUrl(skiddleEvent.getImageurl())
                 .build();
 
         return activity;
     }
 
-    private static ActivityType getActivityType() {
-        return ActivityType.EVENT;
+    private static ActivityType getActivityType(Event ticketmasterEvent) {
+        String eventType = ticketmasterEvent.getType();
+        return switch (eventType){
+           case "SPORT" -> ActivityType.SPORTS;
+            default ->  ActivityType.EVENT;
+        };
+
     }
 }
