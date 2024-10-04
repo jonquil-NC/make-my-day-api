@@ -21,5 +21,5 @@ public class Event {
     private List<Classification> classifications;
 
     @JsonProperty(value = "_embedded")
-    private List<EmbeddedVenues> embeddedVenues;
+    private EmbeddedVenues embeddedVenues;
 }

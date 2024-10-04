@@ -1,5 +1,6 @@
 package com.northcoders.makemydayapi.dto.ticketmaster;
 
+import com.northcoders.makemydayapi.model.Location;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ public class Venue {
 //    private String postalCode; // "E20 2ST"
 //    private String timezone; // "Europe/London"
 //    private VenueCity city;
+    private Location location;
 
     @Data
     @Getter
