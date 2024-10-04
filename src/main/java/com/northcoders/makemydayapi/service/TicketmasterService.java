@@ -1,13 +1,12 @@
 package com.northcoders.makemydayapi.service;
 
-import com.northcoders.makemydayapi.model.Activity;
-import org.springframework.stereotype.Service;
+import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleActivity;
 
 import java.util.List;
 
 
 public interface TicketmasterService {
 
-    List<Activity> getAllEvents();
+    List<TicketmasterSkiddleActivity> getAllEvents();
 
 }

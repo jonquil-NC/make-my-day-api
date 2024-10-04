@@ -1,4 +1,4 @@
-package com.northcoders.makemydayapi.model;
+package com.northcoders.makemydayapi.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Location {
+public class TicketmasterSkiddleLocation {
     double longitude;
     double latitude;
 }
