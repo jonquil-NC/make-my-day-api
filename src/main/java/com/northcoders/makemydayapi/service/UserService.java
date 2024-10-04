@@ -7,4 +7,5 @@ import jakarta.validation.Valid;
 public interface UserService {
 
     public UserInfoDTO signUp (@Valid AuthRequestDTO authRequestDTO);
+
 }
