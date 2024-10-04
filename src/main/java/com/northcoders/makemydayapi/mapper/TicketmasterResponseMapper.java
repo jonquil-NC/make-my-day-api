@@ -1,6 +1,7 @@
 package com.northcoders.makemydayapi.mapper;
 
 import com.northcoders.makemydayapi.dto.ticketmaster.Event;
+import com.northcoders.makemydayapi.dto.ticketmaster.enums.TicketmasterSegment;
 import com.northcoders.makemydayapi.model.Activity;
 import com.northcoders.makemydayapi.model.ActivityType;
 import com.northcoders.makemydayapi.model.Location;
@@ -43,13 +44,15 @@ public class TicketmasterResponseMapper {
     private static ActivityType getActivityType(String segmentName) {
         ActivityType activityType = null;
 
-        switch (segmentName) {
-            case "THEATRE" -> activityType = ActivityType.THEATRE;
-            case "COMEDY" -> activityType = ActivityType.COMEDY;
-            case "SPORT" -> activityType = ActivityType.SPORT;
-            case "ARTS" -> activityType = ActivityType.ARTS;
-            default -> activityType = ActivityType.EVENT;
 
+        if (segmentName.equals(TicketmasterSegment.Sports.getValue())) {
+            activityType = ActivityType.Sports;
+        } else if (segmentName.equals(TicketmasterSegment.Music.getValue())) {
+            activityType = ActivityType.Music;
+        } else if (segmentName.equals(TicketmasterSegment.Arts_N_Theatre.getValue())) {
+            activityType = ActivityType.Arts_N_Theatre;
+        } else {
+            activityType = ActivityType.EVENT;
         }
 
         return activityType;
