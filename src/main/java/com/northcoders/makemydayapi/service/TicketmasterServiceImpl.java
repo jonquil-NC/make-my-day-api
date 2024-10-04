@@ -2,6 +2,7 @@ package com.northcoders.makemydayapi.service;
 
 import com.northcoders.makemydayapi.dto.ticketmaster.Event;
 import com.northcoders.makemydayapi.dto.ticketmaster.TicketmasterResponse;
+import com.northcoders.makemydayapi.dto.ticketmaster.enums.TicketmasterSegment;
 import com.northcoders.makemydayapi.mapper.TicketmasterResponseMapper;
 import com.northcoders.makemydayapi.model.Activity;
 import com.northcoders.makemydayapi.model.ActivityType;
@@ -18,8 +19,8 @@ import java.util.List;
 public class TicketmasterServiceImpl implements TicketmasterService {
 
     private static final String BASE_URL = "https://app.ticketmaster.com/discovery/v2";
-    private static final String LONDON_LAT = "51.5074";
-    private static final String LONDON_LON = "-0.1278";
+    //    private static final String LONDON_LAT = "51.5074";
+//    private static final String LONDON_LON = "-0.1278";
     private final WebClient webClient;
 
     @Value("${ticketmaster-api-key}")
@@ -33,26 +34,40 @@ public class TicketmasterServiceImpl implements TicketmasterService {
     }
 
     @Override
-    public List<Activity> getEventsByActivityType(ActivityType activityType){
+    public List<Activity> getEventsByActivityType(ActivityType activityType) {
         TicketmasterResponse result = this.webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/events")
                         .queryParam("apikey", ticketmasterApiKey)
                         .queryParam("dmaId", "602")
 //                        .queryParam("latlong", LONDON_LAT + "," + LONDON_LON)
-                        .queryParam("keyword", activityType.name())
+//                        .queryParam("keyword", activityType.name())
+                        .queryParam("classificationId", getClassificationId(activityType))
                         .build())
                 .retrieve()
                 .bodyToMono(TicketmasterResponse.class)
                 .block();
 
-        List<Event> ticketmasterEvents = result.get_embedded().getEvents();
+        List<Event> ticketmasterEvents = result.getEmbeddedEvents().getEvents();
+
         List<Activity> activities = new ArrayList<>();
         for (Event ticketMasterEvent : ticketmasterEvents) {
             Activity activity = TicketmasterResponseMapper.toEntity(ticketMasterEvent);
             activities.add(activity);
         }
         return activities;
+    }
+
+    private String getClassificationId(ActivityType activityType) {
+        if (activityType.equals(ActivityType.Sports)) {
+            return TicketmasterSegment.Sports.getId();
+        } else if (activityType.equals(ActivityType.Music)) {
+            return TicketmasterSegment.Music.getId();
+        } else if (activityType.equals(ActivityType.Arts_N_Theatre)) {
+            return TicketmasterSegment.Arts_N_Theatre.getId();
+        } else {
+            throw new RuntimeException("Unsupported Ticketmaster Activity Type!");
+        }
     }
 
 //    @Override
