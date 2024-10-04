@@ -1,16 +1,10 @@
 package com.northcoders.makemydayapi.mapper;
 
 import com.northcoders.makemydayapi.dto.skiddle.SkiddleEvent;
-import com.northcoders.makemydayapi.dto.skiddle.SkiddleEventsResult;
 import com.northcoders.makemydayapi.model.Activity;
 import com.northcoders.makemydayapi.model.ActivityType;
 import com.northcoders.makemydayapi.model.Location;
 import com.northcoders.makemydayapi.model.ResourceType;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Date;
-import java.util.List;
 
 public class SkiddleResponseMapper {
     public final static Activity toEntity(SkiddleEvent skiddleEvent) {
@@ -47,19 +41,20 @@ public class SkiddleResponseMapper {
         ActivityType activityType = null;
 
         switch (eventCode) {
-            case "SPORT" -> activityType = ActivityType.SPORTS;
-            case "ARTS" -> activityType = ActivityType.ARTS;
-            case "FEST" -> activityType = ActivityType.FESTIVAL;
+            case "FEST" -> activityType = ActivityType.FEST;
             case "LIVE" -> activityType = ActivityType.LIVE;
             case "CLUB" -> activityType = ActivityType.CLUB;
-            case "DATE" -> activityType = ActivityType.DATING;
+            case "DATE" -> activityType = ActivityType.DATE;
             case "THEATRE" -> activityType = ActivityType.THEATRE;
             case "COMEDY" -> activityType = ActivityType.COMEDY;
-            case "EXHIB" -> activityType = ActivityType.EXHIBITION;
+            case "EXHIB" -> activityType = ActivityType.EXHIB;
             case "KIDS" -> activityType = ActivityType.KIDS;
-            case "BARPUB" -> activityType = ActivityType.BAR;
-            case "LGB" -> activityType = ActivityType.LGBT;
+            case "BARPUB" -> activityType = ActivityType.BARPUB;
+            case "LGB" -> activityType = ActivityType.LGB;
+            case "SPORT" -> activityType = ActivityType.SPORT;
+            case "ARTS" -> activityType = ActivityType.ARTS;
             default -> activityType = ActivityType.EVENT;
+
         }
 
         return activityType;
