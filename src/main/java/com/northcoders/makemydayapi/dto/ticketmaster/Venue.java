@@ -1,5 +1,6 @@
 package com.northcoders.makemydayapi.dto.ticketmaster;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.northcoders.makemydayapi.model.Location;
 import lombok.Data;
 import lombok.Getter;
@@ -16,7 +17,8 @@ public class Venue {
 //    private String postalCode; // "E20 2ST"
 //    private String timezone; // "Europe/London"
 //    private VenueCity city;
-    private Location location;
+    @JsonProperty(value = "location")
+    private VenueLocation venueLocation;
 
     @Data
     @Getter

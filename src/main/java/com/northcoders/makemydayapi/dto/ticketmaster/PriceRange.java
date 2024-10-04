@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class PriceRange {
-    private String type; // "standard"
-    private String currency; // "GBP" -> Can be Currency enum value later
-    private double min; // 55.0
-    private double max; // 170.0
+    //    private String type; // "standard"
+//    private String currency; // "GBP" -> Can be Currency enum value later
+    private Double min; // 55.0
+    private Double max; // 170.0
 }
