@@ -19,7 +19,12 @@ public class ValidTicketmasterActivityTypeValidator implements ConstraintValidat
     }
 
     private static boolean isValidTicketmasterActivityType(ActivityType activityType){
-        return activityType.equals(ActivityType.SPORTS);
+        boolean isValidSkiddleActivityType = activityType.equals(ActivityType.THEATRE)
+                || activityType.equals(ActivityType.COMEDY)
+                || activityType.equals(ActivityType.SPORT)
+                || activityType.equals(ActivityType.ARTS);
+
+        return isValidSkiddleActivityType;
     }
 
 }

@@ -24,4 +24,10 @@ public enum ActivityType {
     LGB,        // Gay/Lesbian event
     SPORT,      // Sporting event
     ARTS,       // The Arts
+
+    // Ticketmaster
+    Sports, // id: KZFzniwnSyZfZ7v7nE
+    Music, // id: KZFzniwnSyZfZ7v7nJ
+    Arts_N_Theatre, // id: KZFzniwnSyZfZ7v7na
+
 }

@@ -22,11 +22,14 @@ public class TicketmasterResponseMapper {
                 .build();
 
         Activity activity = Activity.builder()
+//                .id()
                 .name(ticketmasterEvent.getName())
                 .description(null)
+//                .createdDate()
+//                .updatedDate()
                 .location(venueLocation)
                 .isOutdoor(false) // ??
-                .activityType(getActivityType(ticketmasterEvent))
+                .activityType(getActivityType(ticketmasterEvent.getClassifications().getFirst().getSegment().getSegmentName()))
                 .price(null) // nullable
                 .date(LocalDate.parse(ticketmasterEvent.getDates().getStart().getLocalDate()))
                 .startTime(LocalTime.parse(ticketmasterEvent.getDates().getStart().getLocalTime()))
@@ -37,12 +40,18 @@ public class TicketmasterResponseMapper {
         return activity;
     }
 
-    private static ActivityType getActivityType(Event ticketmasterEvent) {
-        String eventType = ticketmasterEvent.getType();
-        return switch (eventType){
-           case "SPORT" -> ActivityType.SPORTS;
-            default ->  ActivityType.EVENT;
-        };
+    private static ActivityType getActivityType(String eventType) {
+        ActivityType activityType = null;
 
+        switch (eventType) {
+            case "THEATRE" -> activityType = ActivityType.THEATRE;
+            case "COMEDY" -> activityType = ActivityType.COMEDY;
+            case "SPORT" -> activityType = ActivityType.SPORT;
+            case "ARTS" -> activityType = ActivityType.ARTS;
+            default -> activityType = ActivityType.EVENT;
+
+        }
+
+        return activityType;
     }
 }

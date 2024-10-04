@@ -1,21 +1,16 @@
 package com.northcoders.makemydayapi.dto.ticketmaster;
 
-import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import java.util.List;
 
+@Data
+@Getter
+@NoArgsConstructor
 public class TicketmasterResponse {
 
     private Embedded _embedded;
-
-    public Embedded get_embedded() {
-        return _embedded;
-    }
-
-    public void set_embedded(Embedded _embedded) {
-        this._embedded = _embedded;
-    }
 
 
 }
