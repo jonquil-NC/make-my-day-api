@@ -10,14 +10,18 @@ public enum ActivityType {
     MUSEUM,
     EXHIBITION,
     MEETUP,
-    SPORTS,
-    FESTIVAL,
-    LIVE,
-    DATING,
-    LGBT,
-    THEATRE,
-    COMEDY,
-    KIDS,
-    ARTS,
-    CLUB
+
+    // Skiddle
+    FEST,       // Festivals
+    LIVE,       // Live music
+    CLUB,       // Clubbing/Dance music
+    DATE,       // Dating event
+    THEATRE,    // Theatre/Dance
+    COMEDY,     // Comedy
+    EXHIB,      // Exhibitions and Attractions
+    KIDS,       // Kids/Family event
+    BARPUB,     // Bar/Pub event
+    LGB,        // Gay/Lesbian event
+    SPORT,      // Sporting event
+    ARTS,       // The Arts
 }
