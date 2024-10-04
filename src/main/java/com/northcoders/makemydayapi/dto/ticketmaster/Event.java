@@ -16,7 +16,7 @@ public class Event {
     private String name;
     private List<Image> images;
     private Dates dates;
-    private String priceRanges;
+    private List<PriceRange> priceRanges;
     private String type;
     private List<Classification> classifications;
 
