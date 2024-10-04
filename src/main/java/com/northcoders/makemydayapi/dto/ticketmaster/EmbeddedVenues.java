@@ -9,8 +9,7 @@ import java.util.List;
 @Data
 @Getter
 @NoArgsConstructor
-public class Embedded {
-
-    private List<Event> events;
+public class EmbeddedVenues {
+    private List<Venue> venues;
 
 }
