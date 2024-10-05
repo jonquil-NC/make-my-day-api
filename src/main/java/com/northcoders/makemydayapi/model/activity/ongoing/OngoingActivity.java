@@ -6,12 +6,12 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Data
+//@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
+//@Builder
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class OngoingActivity extends Activity  {
 
@@ -30,4 +30,5 @@ public class OngoingActivity extends Activity  {
         this.openingHours = openingHours;
         this.rating = rating;
     }
+
 }
