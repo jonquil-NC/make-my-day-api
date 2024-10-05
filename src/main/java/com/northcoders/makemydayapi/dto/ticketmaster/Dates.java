@@ -1,43 +1,27 @@
 package com.northcoders.makemydayapi.dto.ticketmaster;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Data
+@Getter
+@NoArgsConstructor
 public class Dates {
 
     @SerializedName("start")
     private Start start;
 
-    public Start getStart() {
-        return start;
-    }
-
-    public void setStart(Start start) {
-        this.start = start;
-    }
-
+    @Data
+    @Getter
+    @NoArgsConstructor
     public static class Start {
 
-        @SerializedName("localDate")
         private String localDate;
 
-        @SerializedName("localTime")
         private String localTime;
 
-        public String getLocalDate() {
-            return localDate;
-        }
-
-        public void setLocalDate(String localDate) {
-            this.localDate = localDate;
-        }
-
-        public String getLocalTime() {
-            return localTime;
-        }
-
-        public void setLocalTime(String localTime) {
-            this.localTime = localTime;
-        }
     }
 
 

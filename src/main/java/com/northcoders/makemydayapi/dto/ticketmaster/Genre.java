@@ -1,5 +1,6 @@
 package com.northcoders.makemydayapi.dto.ticketmaster;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,10 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @Getter
 @NoArgsConstructor
-public class Image {
-    private String ratio;
-    private String url;
-    private int width;
-    private int height;
-
+public class Genre {
+    private String id;
+    @JsonProperty(value = "name")
+    private String genreName;
 }

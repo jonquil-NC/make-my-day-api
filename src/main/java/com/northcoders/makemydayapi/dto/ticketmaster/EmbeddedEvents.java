@@ -4,13 +4,13 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Getter
 @NoArgsConstructor
-public class Image {
-    private String ratio;
-    private String url;
-    private int width;
-    private int height;
+public class EmbeddedEvents {
+
+    private List<Event> events;
 
 }
