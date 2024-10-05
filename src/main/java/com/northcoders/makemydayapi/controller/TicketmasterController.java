@@ -1,9 +1,8 @@
 package com.northcoders.makemydayapi.controller;
 
-import com.northcoders.makemydayapi.model.Activity;
-import com.northcoders.makemydayapi.model.ActivityType;
+import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
+import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleActivity;
 import com.northcoders.makemydayapi.service.TicketmasterService;
-import com.northcoders.makemydayapi.service.TicketmasterServiceImpl;
 import com.northcoders.makemydayapi.validation.constraints.ValidTicketmasterActivityType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,11 +22,10 @@ public class TicketmasterController {
     TicketmasterService ticketmasterService;
 
     @GetMapping("/events")
-    public ResponseEntity<List<Activity>> getEventsByActivityType(@RequestParam @ValidTicketmasterActivityType ActivityType activityType){
+    public ResponseEntity<List<TicketmasterSkiddleActivity>> getEventsByActivityType(@RequestParam @ValidTicketmasterActivityType OneOffActivityType activityType){
 
-        List<Activity> filteredTicketmasterEvents = ticketmasterService.getEventsByActivityType(activityType);
+        List<TicketmasterSkiddleActivity> filteredTicketmasterEvents = ticketmasterService.getEventsByActivityType(activityType);
 
         return new ResponseEntity<>(filteredTicketmasterEvents, HttpStatus.OK);
     }
-
 }

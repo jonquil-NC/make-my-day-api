@@ -4,8 +4,8 @@ import com.northcoders.makemydayapi.dto.ticketmaster.Event;
 import com.northcoders.makemydayapi.dto.ticketmaster.TicketmasterResponse;
 import com.northcoders.makemydayapi.dto.ticketmaster.enums.TicketmasterSegment;
 import com.northcoders.makemydayapi.mapper.TicketmasterResponseMapper;
-import com.northcoders.makemydayapi.model.Activity;
-import com.northcoders.makemydayapi.model.ActivityType;
+import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
+import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleActivity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class TicketmasterServiceImpl implements TicketmasterService {
     @Value("${ticketmaster-api-key}")
     private String ticketmasterApiKey;
 
-    public TicketmasterServiceImpl(WebClient.Builder webclientBuilder) {
+    public TicketmasterServiceImpl() {
         this.webClient = WebClient.builder()
                 .baseUrl(BASE_URL)
                 .defaultHeader("Accept", "application/json")
@@ -34,7 +34,7 @@ public class TicketmasterServiceImpl implements TicketmasterService {
     }
 
     @Override
-    public List<Activity> getEventsByActivityType(ActivityType activityType) {
+    public List<TicketmasterSkiddleActivity> getEventsByActivityType(OneOffActivityType activityType) {
         TicketmasterResponse result = this.webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/events")
@@ -50,47 +50,25 @@ public class TicketmasterServiceImpl implements TicketmasterService {
 
         List<Event> ticketmasterEvents = result.getEmbeddedEvents().getEvents();
 
-        List<Activity> activities = new ArrayList<>();
+        List<TicketmasterSkiddleActivity> activities = new ArrayList<>();
         for (Event ticketMasterEvent : ticketmasterEvents) {
-            Activity activity = TicketmasterResponseMapper.toEntity(ticketMasterEvent);
+            TicketmasterSkiddleActivity activity = TicketmasterResponseMapper.toEntity(ticketMasterEvent);
             activities.add(activity);
         }
         return activities;
     }
 
-    private String getClassificationId(ActivityType activityType) {
-        if (activityType.equals(ActivityType.Sports)) {
+    private String getClassificationId(OneOffActivityType activityType) {
+        if (activityType.equals(OneOffActivityType.SPORTS)) {
             return TicketmasterSegment.Sports.getId();
-        } else if (activityType.equals(ActivityType.Music)) {
+        } else if (activityType.equals(OneOffActivityType.MUSIC)) {
             return TicketmasterSegment.Music.getId();
-        } else if (activityType.equals(ActivityType.Arts_N_Theatre)) {
+        } else if (activityType.equals(OneOffActivityType.CULTURAL)) {
             return TicketmasterSegment.Arts_N_Theatre.getId();
         } else {
             throw new RuntimeException("Unsupported Ticketmaster Activity Type!");
         }
     }
 
-//    @Override
-//    public List<Activity> getAllEvents() {
-//        log.info("Retrieving {} events for Ticketmaster", "all");
-//        TicketmasterResponse result = this.webClient.get()
-//                .uri("/events"
-//                        + "?apikey=" + ticketmasterApiKey
-//                        + "&latlong=" + LONDON_LAT + "," + LONDON_LON
-//                )
-//                .retrieve()
-//                .bodyToMono(TicketmasterResponse.class)
-//                .block();
-//        List<Event> ticketmasterEvents = result.get_embedded().getEvents();
-//        log.info("Retrieved {} events for Ticketmaster", ticketmasterEvents.size());
-//        List<Activity> activities = new ArrayList<>();
-//        log.info("Mapping {} events to an Activity", ticketmasterEvents.size());
-//        ticketmasterEvents.forEach(ticketMasterEvent -> {
-//            Activity activity = TicketmasterResponseMapper.toEntity(ticketMasterEvent);
-//            activities.add(activity);
-//        });
-//        log.info("Mapped {} events to an Activity", activities.size());
-//        return activities;
-//    }
 
 }

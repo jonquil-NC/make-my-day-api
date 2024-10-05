@@ -1,10 +1,16 @@
-package com.northcoders.makemydayapi.places.dto;
+package com.northcoders.makemydayapi.dto.places;
 
-public abstract class Place {
+import com.northcoders.makemydayapi.dto.ActivityFieldsService;
+import com.northcoders.makemydayapi.dto.OngoingActivityFieldsService;
+import com.northcoders.makemydayapi.model.activity.ongoing.OngoingActivityType;
+import org.springframework.security.core.parameters.P;
+
+public abstract class Place implements OngoingActivityFieldsService {
     String name;
     String openingHours;
     String address;
     Double rating;
+    OngoingActivityType ongoingActivityType;
 
     public Place(String name, String openingHours, String address, Double rating) {
         this.name = name;
@@ -13,6 +19,7 @@ public abstract class Place {
         this.rating = rating;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -21,6 +28,7 @@ public abstract class Place {
         this.name = name;
     }
 
+    @Override
     public String getOpeningHours() {
         return openingHours;
     }
@@ -29,6 +37,7 @@ public abstract class Place {
         this.openingHours = openingHours;
     }
 
+    @Override
     public String getAddress() {
         return address;
     }
@@ -37,6 +46,7 @@ public abstract class Place {
         this.address = address;
     }
 
+    @Override
     public Double getRating() {
         return rating;
     }
@@ -44,4 +54,23 @@ public abstract class Place {
     public void setRating(Double rating) {
         this.rating = rating;
     }
+
+    public OngoingActivityType getOngoingActivityType() {
+        return ongoingActivityType;
+    }
+
+    public void setOngoingActivityType(OngoingActivityType ongoingActivityType) {
+        this.ongoingActivityType = ongoingActivityType;
+    }
+
+    @Override
+    public String getImageUrl(){
+        return null;
+    }
+
+    @Override
+    public String getPhoneNumber() {
+        return null;
+    }
+
 }

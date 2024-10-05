@@ -1,15 +1,11 @@
-package com.northcoders.makemydayapi.model;
+package com.northcoders.makemydayapi.model.activity.oneoff;
 
-public enum ActivityType {
-    EVENT,
-    RESTAURANT,
-    LANDMARK,
-    BAR,
-    WELLNESS,
-    PARK,
-    MUSEUM,
-    EXHIBITION,
-    MEETUP,
+public enum OneOffActivityType {
+
+    // Ticketmaster
+    SPORTS,
+    MUSIC,
+    CULTURAL,
 
     // Skiddle
     FEST,       // Festivals
@@ -23,11 +19,5 @@ public enum ActivityType {
     BARPUB,     // Bar/Pub event
     LGB,        // Gay/Lesbian event
     SPORT,      // Sporting event
-    ARTS,       // The Arts
-
-    // Ticketmaster
-    Sports, // id: KZFzniwnSyZfZ7v7nE
-    Music, // id: KZFzniwnSyZfZ7v7nJ
-    Arts_N_Theatre, // id: KZFzniwnSyZfZ7v7na
-
+    ARTS      // The Arts
 }

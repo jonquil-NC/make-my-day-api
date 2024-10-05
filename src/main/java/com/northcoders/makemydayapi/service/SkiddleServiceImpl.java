@@ -4,12 +4,9 @@ package com.northcoders.makemydayapi.service;
 import com.northcoders.makemydayapi.dto.skiddle.SkiddleEvent;
 import com.northcoders.makemydayapi.dto.skiddle.SkiddleEventsResult;
 import com.northcoders.makemydayapi.mapper.SkiddleResponseMapper;
-import com.northcoders.makemydayapi.model.Activity;
+import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleActivity;
 import com.northcoders.makemydayapi.model.ActivityType;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -40,7 +37,7 @@ public class SkiddleServiceImpl implements SkiddleService {
     }
 
     @Override
-    public List<Activity> getEventsByActivityType(ActivityType activityType) {
+    public List<TicketmasterSkiddleActivity> getEventsByActivityType(ActivityType activityType) {
         Integer limit = 10;
 
         log.info("Retrieving {} {} events for Skiddler", limit, activityType);
@@ -66,15 +63,15 @@ public class SkiddleServiceImpl implements SkiddleService {
 
         log.info("Retrieved [{} of {}] {} events from Skiddler", skiddleEvents.size(), result.getTotalcount(), activityType);
 
-        List<Activity> activities = new ArrayList<>();
+        List<TicketmasterSkiddleActivity> activities = new ArrayList<>();
 
         log.info("Mapping {} {} events to an Activity", skiddleEvents.size(), activityType);
 
         log.info("{}", skiddleEvents.getFirst().getEventCode());
 
         skiddleEvents.forEach(skiddleEvent -> {
-            Activity activity = SkiddleResponseMapper.toEntity(skiddleEvent);
-            activities.add(activity);
+            TicketmasterSkiddleActivity ticketmasterSkiddleActivity = SkiddleResponseMapper.toEntity(skiddleEvent);
+            activities.add(ticketmasterSkiddleActivity);
         });
 
         log.info("Mapped {} {} events to an Activity", activities.size(), activityType);
