@@ -1,10 +1,13 @@
 package com.northcoders.makemydayapi.dto.geoapify;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.northcoders.makemydayapi.dto.ActivityFieldsService;
+import com.northcoders.makemydayapi.dto.OngoingActivityFieldsService;
+import com.northcoders.makemydayapi.model.activity.ongoing.OngoingActivityType;
 import lombok.Builder;
 
 @Builder
-public class Restaurant {
+public class Restaurant implements OngoingActivityFieldsService {
 
     @JsonProperty
     String name;
@@ -17,12 +20,15 @@ public class Restaurant {
     @JsonProperty
     String openingHours;
 
+    OngoingActivityType ongoingActivityType;
+
     public Restaurant(String name, String address, String imageUrl, String phoneNumber, String openingHours) {
         this.name = name;
         this.address = address;
         this.imageUrl = imageUrl;
         this.phoneNumber = phoneNumber;
         this.openingHours = openingHours;
+        this.ongoingActivityType = OngoingActivityType.RESTAURANT;
     }
 
     @Override
@@ -34,5 +40,45 @@ public class Restaurant {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", openingHours='" + openingHours + '\'' +
                 '}';
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getAddress() {
+        return address;
+    }
+
+    @Override
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    @Override
+    public boolean getIsOutdoor() {
+        return false;
+    }
+
+    @Override
+    public OngoingActivityType getOngoingActivityType() {
+        return ongoingActivityType;
+    }
+
+    @Override
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    @Override
+    public String getOpeningHours() {
+        return openingHours;
+    }
+
+    @Override
+    public Double getRating() {
+        return null;
     }
 }

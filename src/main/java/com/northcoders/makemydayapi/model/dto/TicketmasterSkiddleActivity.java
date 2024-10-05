@@ -1,6 +1,7 @@
-package com.northcoders.makemydayapi.model;
+package com.northcoders.makemydayapi.model.dto;
 
 import com.google.gson.annotations.SerializedName;
+import com.northcoders.makemydayapi.model.ResourceType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +15,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Activity {
+public class TicketmasterSkiddleActivity {
 
     @SerializedName("id")
     Long id;
@@ -32,13 +33,10 @@ public class Activity {
     Date updatedDate;
 
     @SerializedName("location")
-    Location location;
+    TicketmasterSkiddleLocation ticketmasterSkiddleLocation;
 
     @SerializedName("is_outdoor")
     boolean isOutdoor;
-
-    @SerializedName("activity_type")
-    ActivityType activityType;
 
     @SerializedName("price")
     String price;
@@ -95,12 +93,12 @@ public class Activity {
         this.updatedDate = updatedDate;
     }
 
-    public Location getLocation() {
-        return location;
+    public TicketmasterSkiddleLocation getTicketmasterSkiddleLocation() {
+        return ticketmasterSkiddleLocation;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setTicketmasterSkiddleLocation(TicketmasterSkiddleLocation ticketmasterSkiddleLocation) {
+        this.ticketmasterSkiddleLocation = ticketmasterSkiddleLocation;
     }
 
     public boolean isOutdoor() {
@@ -109,14 +107,6 @@ public class Activity {
 
     public void setOutdoor(boolean outdoor) {
         isOutdoor = outdoor;
-    }
-
-    public ActivityType getActivityType() {
-        return activityType;
-    }
-
-    public void setActivityType(ActivityType activityType) {
-        this.activityType = activityType;
     }
 
     public String getPrice() {

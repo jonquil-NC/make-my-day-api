@@ -3,7 +3,7 @@ package com.northcoders.makemydayapi.service;
 import com.northcoders.makemydayapi.dto.ticketmaster.Event;
 import com.northcoders.makemydayapi.dto.ticketmaster.TicketmasterResponse;
 import com.northcoders.makemydayapi.mapper.TicketmasterResponseMapper;
-import com.northcoders.makemydayapi.model.Activity;
+import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleActivity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class TicketmasterServiceImpl implements TicketmasterService {
 
 
     @Override
-    public List<Activity> getAllEvents() {
+    public List<TicketmasterSkiddleActivity> getAllEvents() {
         log.info("Retrieving {} events for Ticketmaster", "all");
 
         TicketmasterResponse result = this.webClient.get()
@@ -49,13 +49,13 @@ public class TicketmasterServiceImpl implements TicketmasterService {
 
         log.info("Retrieved {} events for Ticketmaster", ticketmasterEvents.size());
 
-        List<Activity> activities = new ArrayList<>();
+        List<TicketmasterSkiddleActivity> activities = new ArrayList<>();
 
         log.info("Mapping {} events to an Activity", ticketmasterEvents.size());
 
         ticketmasterEvents.forEach(ticketMasterEvent -> {
-            Activity activity = TicketmasterResponseMapper.toEntity(ticketMasterEvent);
-            activities.add(activity);
+            TicketmasterSkiddleActivity ticketmasterSkiddleActivity = TicketmasterResponseMapper.toEntity(ticketMasterEvent);
+            activities.add(ticketmasterSkiddleActivity);
         });
 
         log.info("Mapped {} events to an Activity", activities.size());

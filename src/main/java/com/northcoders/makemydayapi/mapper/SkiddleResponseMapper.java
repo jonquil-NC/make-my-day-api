@@ -1,26 +1,26 @@
 package com.northcoders.makemydayapi.mapper;
 
 import com.northcoders.makemydayapi.dto.skiddle.SkiddleEvent;
-import com.northcoders.makemydayapi.model.Activity;
+import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleActivity;
 import com.northcoders.makemydayapi.model.ActivityType;
-import com.northcoders.makemydayapi.model.Location;
+import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleLocation;
 import com.northcoders.makemydayapi.model.ResourceType;
 
 public class SkiddleResponseMapper {
-    public final static Activity toEntity(SkiddleEvent skiddleEvent) {
-        Location venueLocation = Location.builder()
+    public final static TicketmasterSkiddleActivity toEntity(SkiddleEvent skiddleEvent) {
+        TicketmasterSkiddleLocation venueTicketmasterSkiddleLocation = TicketmasterSkiddleLocation.builder()
                 .latitude(skiddleEvent.getVenue().getLatitude())
                 .longitude(skiddleEvent.getVenue().getLongitude())
                 .build();
 
-        Activity activity = Activity.builder()
+        TicketmasterSkiddleActivity ticketmasterSkiddleActivity = TicketmasterSkiddleActivity.builder()
 //                .id()
 //                .apiId(skiddleEvent.getId())
                 .name(skiddleEvent.getEventname())
                 .description(skiddleEvent.getDescription())
 //                .createdDate()
 //                .updatedDate()
-                .location(venueLocation)
+                .ticketmasterSkiddleLocation(venueTicketmasterSkiddleLocation)
                 .isOutdoor(false)
                 .activityType(skiddleEvent.getEventCode() == null
                         ? ActivityType.EVENT // true
@@ -34,7 +34,7 @@ public class SkiddleResponseMapper {
 //                .imageUrl(skiddleEvent.getImageurl())
                 .build();
 
-        return activity;
+        return ticketmasterSkiddleActivity;
     }
 
     private static ActivityType getActivityType(String eventCode) {

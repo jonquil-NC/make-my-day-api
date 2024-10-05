@@ -1,6 +1,6 @@
 package com.northcoders.makemydayapi.controller;
 
-import com.northcoders.makemydayapi.places.dto.Place;
+import com.northcoders.makemydayapi.dto.places.Place;
 import com.northcoders.makemydayapi.service.PlacesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

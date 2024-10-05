@@ -1,6 +1,6 @@
 package com.northcoders.makemydayapi.controller;
 
-import com.northcoders.makemydayapi.model.Activity;
+import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleActivity;
 import com.northcoders.makemydayapi.service.TicketmasterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,9 +23,9 @@ public class TicketmasterController {
 
 
     @GetMapping("/events")
-    public ResponseEntity<List<Activity>> getAllEvents() {
+    public ResponseEntity<List<TicketmasterSkiddleActivity>> getAllEvents() {
 
-        List<Activity> ticketmasterEvents = ticketmasterService.getAllEvents();
+        List<TicketmasterSkiddleActivity> ticketmasterEvents = ticketmasterService.getAllEvents();
 
         return new ResponseEntity<>(ticketmasterEvents, HttpStatus.OK);
     }
