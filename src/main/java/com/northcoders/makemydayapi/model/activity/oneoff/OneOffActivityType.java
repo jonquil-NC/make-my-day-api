@@ -2,6 +2,9 @@ package com.northcoders.makemydayapi.model.activity.oneoff;
 
 public enum OneOffActivityType {
 
+    // Generic
+    EVENT,
+
     // Ticketmaster
     SPORTS,
     MUSIC,

@@ -3,8 +3,8 @@ package com.northcoders.makemydayapi.mapper;
 import com.northcoders.makemydayapi.dto.ticketmaster.Event;
 import com.northcoders.makemydayapi.dto.ticketmaster.PriceRange;
 import com.northcoders.makemydayapi.dto.ticketmaster.enums.TicketmasterSegment;
-import com.northcoders.makemydayapi.model.ResourceType;
 import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
+import com.northcoders.makemydayapi.model.activity.oneoff.ResourceType;
 import com.northcoders.makemydayapi.model.activity.ongoing.OngoingActivityType;
 import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleActivity;
 import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleLocation;
@@ -31,7 +31,7 @@ public class TicketmasterResponseMapper {
 //                .updatedDate()
                 .ticketmasterSkiddleLocation(venueLocation)
                 .isOutdoor(false) // ??
-                .activityType(getActivityType(ticketmasterEvent.getClassifications().getFirst().getSegment().getSegmentName()))
+//                .activityType(getActivityType(ticketmasterEvent.getClassifications().getFirst().getSegment().getSegmentName()))
                 .price(null) // nullable
                 .date(LocalDate.parse(ticketmasterEvent.getDates().getStart().getLocalDate()))
 //                .startTime(LocalTime.parse(ticketmasterEvent.getDates().getStart().getLocalTime()))

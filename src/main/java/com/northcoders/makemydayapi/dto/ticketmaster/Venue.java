@@ -1,7 +1,6 @@
 package com.northcoders.makemydayapi.dto.ticketmaster;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.northcoders.makemydayapi.model.Location;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
