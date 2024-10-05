@@ -8,12 +8,12 @@ import jakarta.persistence.InheritanceType;
 import lombok.*;
 
 @Entity
-@Data
+//@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
+//@Builder
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class OneOffActivity extends Activity {
 

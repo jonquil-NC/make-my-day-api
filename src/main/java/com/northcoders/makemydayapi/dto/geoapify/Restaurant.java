@@ -4,8 +4,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.northcoders.makemydayapi.dto.ActivityFieldsService;
 import com.northcoders.makemydayapi.dto.OngoingActivityFieldsService;
 import com.northcoders.makemydayapi.model.activity.ongoing.OngoingActivityType;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class Restaurant implements OngoingActivityFieldsService {
 
