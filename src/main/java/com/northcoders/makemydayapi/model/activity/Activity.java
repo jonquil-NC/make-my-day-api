@@ -3,14 +3,13 @@ package com.northcoders.makemydayapi.model.activity;
 import com.northcoders.makemydayapi.dto.ActivityFieldsService;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@Builder
+@SuperBuilder
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Activity {
 

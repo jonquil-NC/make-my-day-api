@@ -1,8 +1,8 @@
 package com.northcoders.makemydayapi.mapper;
 
 import com.northcoders.makemydayapi.dto.ticketmaster.Event;
+import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
 import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleActivity;
-import com.northcoders.makemydayapi.model.ActivityType;
 import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleLocation;
 import com.northcoders.makemydayapi.model.ResourceType;
 
@@ -40,7 +40,7 @@ public class TicketmasterResponseMapper {
         return ticketmasterSkiddleActivity;
     }
 
-    private static ActivityType getActivityType() {
-        return ActivityType.EVENT;
+    private static OneOffActivityType getActivityType() {
+        return OneOffActivityType.EVENT;
     }
 }

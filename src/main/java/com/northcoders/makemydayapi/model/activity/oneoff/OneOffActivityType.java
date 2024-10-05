@@ -6,6 +6,7 @@ public enum OneOffActivityType {
     SPORTS,
     MUSIC,
     CULTURAL,
+    EVENT,
 
     // Skiddle
     FEST,       // Festivals

@@ -63,7 +63,12 @@ public class UserServiceTests {
 
         var request = new AuthRequestDTO("John", "Doe", "john_doe@gmail.com", "AcsC508pS8$8r5H14Ii");
 
-        var existingUser = new User(1L, "Murphy", "Denny", "john_doe@gmail.com", "AcsC508pS8$8r5H14Ii");
+        var existingUser = User.builder().id(1L)
+                .firstname("Murphy")
+                .lastname("Denny")
+                .password("AcsC508pS8$8r5H14Ii")
+                .email("john_doe@gmail.com")
+                .build();
 
         when(mockUserRepository.findByEmail(request.getEmail())).thenReturn(Optional.of(existingUser));
 

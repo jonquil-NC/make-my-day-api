@@ -4,8 +4,8 @@ package com.northcoders.makemydayapi.service;
 import com.northcoders.makemydayapi.dto.skiddle.SkiddleEvent;
 import com.northcoders.makemydayapi.dto.skiddle.SkiddleEventsResult;
 import com.northcoders.makemydayapi.mapper.SkiddleResponseMapper;
+import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
 import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleActivity;
-import com.northcoders.makemydayapi.model.ActivityType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ public class SkiddleServiceImpl implements SkiddleService {
     }
 
     @Override
-    public List<TicketmasterSkiddleActivity> getEventsByActivityType(ActivityType activityType) {
+    public List<TicketmasterSkiddleActivity> getEventsByActivityType(OneOffActivityType activityType) {
         Integer limit = 10;
 
         log.info("Retrieving {} {} events for Skiddler", limit, activityType);

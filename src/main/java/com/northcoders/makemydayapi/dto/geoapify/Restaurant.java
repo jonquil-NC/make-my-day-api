@@ -20,7 +20,7 @@ public class Restaurant implements OngoingActivityFieldsService {
     @JsonProperty
     String openingHours;
 
-    OngoingActivityType ongoingActivityType;
+    final OngoingActivityType ongoingActivityType = OngoingActivityType.RESTAURANT;
 
     public Restaurant(String name, String address, String imageUrl, String phoneNumber, String openingHours) {
         this.name = name;
@@ -28,7 +28,6 @@ public class Restaurant implements OngoingActivityFieldsService {
         this.imageUrl = imageUrl;
         this.phoneNumber = phoneNumber;
         this.openingHours = openingHours;
-        this.ongoingActivityType = OngoingActivityType.RESTAURANT;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.northcoders.makemydayapi.model.dto;
 
 import com.google.gson.annotations.SerializedName;
 import com.northcoders.makemydayapi.model.ResourceType;
+import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -52,6 +53,9 @@ public class TicketmasterSkiddleActivity {
 
     @SerializedName("resource_type")
     ResourceType resourceType;
+
+    @SerializedName("activity_type")
+    OneOffActivityType activityType;
 
     public Long getId() {
         return id;

@@ -4,14 +4,13 @@ import com.northcoders.makemydayapi.dto.OngoingActivityFieldsService;
 import com.northcoders.makemydayapi.model.activity.Activity;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@Builder
+@SuperBuilder
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class OngoingActivity extends Activity  {
 
