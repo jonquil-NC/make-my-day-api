@@ -5,6 +5,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 
 import java.time.Instant;
@@ -13,6 +14,7 @@ import java.util.Date;
 
 import static javax.crypto.Cipher.SECRET_KEY;
 
+@Configuration
 public class JwtConfiguration {
 
     @Value("${jwt.secret}")
