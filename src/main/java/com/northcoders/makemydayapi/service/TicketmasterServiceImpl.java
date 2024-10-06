@@ -58,6 +58,34 @@ public class TicketmasterServiceImpl implements TicketmasterService {
         return activities;
     }
 
+    @Override
+    public List<TicketmasterSkiddleActivity> getEventsByActivityTypes(List<OneOffActivityType> activityTypes) {
+
+        TicketmasterResponse result = this.webClient.get()
+                .uri(uriBuilder -> {
+                    uriBuilder
+                            .path("/events")
+                            .queryParam("apikey", ticketmasterApiKey)
+                            .queryParam("dmaId", "602");
+
+                    activityTypes.forEach(activityType -> uriBuilder.queryParam("classificationId", getClassificationId(activityType)));
+
+                    return uriBuilder.build();
+                })
+                .retrieve()
+                .bodyToMono(TicketmasterResponse.class)
+                .block();
+
+        List<Event> ticketmasterEvents = result.getEmbeddedEvents().getEvents();
+
+        List<TicketmasterSkiddleActivity> activities = new ArrayList<>();
+        for (Event ticketMasterEvent : ticketmasterEvents) {
+            TicketmasterSkiddleActivity activity = TicketmasterResponseMapper.toEntity(ticketMasterEvent);
+            activities.add(activity);
+        }
+        return activities;
+    }
+
     private String getClassificationId(OneOffActivityType activityType) {
         if (activityType.equals(OneOffActivityType.SPORTS)) {
             return TicketmasterSegment.Sports.getId();
