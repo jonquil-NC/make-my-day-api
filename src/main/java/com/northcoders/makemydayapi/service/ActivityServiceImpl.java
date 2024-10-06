@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -29,15 +31,32 @@ public class ActivityServiceImpl implements ActivityService {
 
         List<TicketmasterSkiddleActivity> oneOffEvents = new ArrayList<>();
 
-        activityTypes.forEach(oneOffActivityType -> {
-            if (oneOffActivityType.resourceType.equals(ResourceType.SKIDDLE)) {
+        Map<ResourceType, List<OneOffActivityType>> activityTypesByResourceType = activityTypes.stream()
+                .collect(Collectors.groupingBy(oneOffActivityType -> oneOffActivityType.resourceType));
+
+        List<OneOffActivityType> skiddleActivityTypes = activityTypesByResourceType.get(ResourceType.SKIDDLE);
+
+
+        List<OneOffActivityType> ticketmasterActivityTypes = activityTypesByResourceType.get(ResourceType.TICKETMASTER);
+        log.info("Received {} Skiddle, {} Ticketmaster activity types",
+                skiddleActivityTypes.size(),
+                ticketmasterActivityTypes.size()
+        );
+
+        if (!skiddleActivityTypes.isEmpty()) {
+            // Multiple Requests with 1 activity type
+            skiddleActivityTypes.forEach(oneOffActivityType -> {
                 List<TicketmasterSkiddleActivity> skiddleEvents = skiddleService.getEventsByActivityType(oneOffActivityType);
                 oneOffEvents.addAll(skiddleEvents);
-            } else if (oneOffActivityType.resourceType.equals(ResourceType.TICKETMASTER)) {
-                List<TicketmasterSkiddleActivity> ticketmasterEvents = ticketmasterService.getEventsByActivityType(oneOffActivityType);
-                oneOffEvents.addAll(ticketmasterEvents);
-            }
-        });
+            });
+        }
+
+        if (!ticketmasterActivityTypes.isEmpty()) {
+            // One Request with N activity types
+            List<TicketmasterSkiddleActivity> ticketmasterEvents = ticketmasterService.getEventsByActivityTypes(ticketmasterActivityTypes);
+            oneOffEvents.addAll(ticketmasterEvents);
+        }
+
 
         log.info("Fetched {} one-off activities", oneOffEvents.size());
 
