@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,6 +26,20 @@ public class PlacesController {
     @GetMapping("{type}")
     public ResponseEntity<List<Place>> getPlaces(@PathVariable String type) throws Exception {
         return new ResponseEntity<>(placesService.getPlaces(type), HttpStatus.OK);
+    }
+
+
+
+    @GetMapping("")
+    public ResponseEntity<List<Place>> getAllPlacesByTypes(@RequestParam("type") List<String> placesTypeList) throws Exception {
+        List<Place> placesList = new ArrayList<>();
+
+        for(String type : placesTypeList) {
+            List<Place> tmpList = placesService.getPlaces(type);
+            placesList.addAll(tmpList);
+        }
+
+        return ResponseEntity.ok(placesList);
     }
 
 }
