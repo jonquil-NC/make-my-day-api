@@ -23,7 +23,7 @@ public class RestaurantController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Restaurant>> getAllRestaurantByCuisineRestaurants(@RequestParam("types") List<String> cuisineTypeList){
+    public ResponseEntity<List<Restaurant>> getAllRestaurantByCuisineRestaurants(@RequestParam("type") List<String> cuisineTypeList){
         List<Restaurant> restaurantList = new ArrayList<>();
 
         for(String type : cuisineTypeList) {

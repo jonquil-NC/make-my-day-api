@@ -31,7 +31,7 @@ public class PlacesController {
 
 
     @GetMapping("")
-    public ResponseEntity<List<Place>> getAllPlacesByTypes(@RequestParam("types") List<String> placesTypeList) throws Exception {
+    public ResponseEntity<List<Place>> getAllPlacesByTypes(@RequestParam("type") List<String> placesTypeList) throws Exception {
         List<Place> placesList = new ArrayList<>();
 
         for(String type : placesTypeList) {
