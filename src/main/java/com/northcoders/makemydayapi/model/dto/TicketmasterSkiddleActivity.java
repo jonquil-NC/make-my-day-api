@@ -1,6 +1,7 @@
 package com.northcoders.makemydayapi.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
 import com.northcoders.makemydayapi.model.activity.oneoff.ResourceType;
 import lombok.*;
 
@@ -18,6 +19,12 @@ public class TicketmasterSkiddleActivity {
 
     @JsonProperty(value = "id")
     Long id;
+    
+    @JsonProperty(value = "resource_type")
+    ResourceType resourceType;
+
+    @JsonProperty(value = "activity_type")
+    OneOffActivityType activityType;
 
     @JsonProperty(value = "name")
     String name;
@@ -48,8 +55,5 @@ public class TicketmasterSkiddleActivity {
 
     @JsonProperty(value = "end_time")
     LocalTime endTime;
-
-    @JsonProperty(value = "resource_type")
-    ResourceType resourceType;
 
 }

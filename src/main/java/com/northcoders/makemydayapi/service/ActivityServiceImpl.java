@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,13 +31,10 @@ public class ActivityServiceImpl implements ActivityService {
             return List.of();
         }
 
-        List<TicketmasterSkiddleActivity> oneOffEvents = new ArrayList<>();
-
         Map<ResourceType, List<OneOffActivityType>> activityTypesByResourceType = activityTypes.stream()
                 .collect(Collectors.groupingBy(oneOffActivityType -> oneOffActivityType.resourceType));
 
         List<OneOffActivityType> skiddleActivityTypes = activityTypesByResourceType.get(ResourceType.SKIDDLE);
-
 
         List<OneOffActivityType> ticketmasterActivityTypes = activityTypesByResourceType.get(ResourceType.TICKETMASTER);
         log.info("Received {} Skiddle, {} Ticketmaster activity types",
@@ -43,20 +42,37 @@ public class ActivityServiceImpl implements ActivityService {
                 ticketmasterActivityTypes.size()
         );
 
+        // Async
+        List<CompletableFuture<List<TicketmasterSkiddleActivity>>> futureEventLists = new ArrayList<>();
+
         if (!skiddleActivityTypes.isEmpty()) {
             // Multiple Requests with 1 activity type
             skiddleActivityTypes.forEach(oneOffActivityType -> {
-                List<TicketmasterSkiddleActivity> skiddleEvents = skiddleService.getEventsByActivityType(oneOffActivityType);
-                oneOffEvents.addAll(skiddleEvents);
+                CompletableFuture<List<TicketmasterSkiddleActivity>> skiddleEvents = skiddleService.getEventsByActivityType(oneOffActivityType);
+
+                List<CompletableFuture<List<TicketmasterSkiddleActivity>>> skiddleFutures =
+                        List.of(skiddleEvents);
+
+                futureEventLists.addAll(skiddleFutures);
             });
         }
 
         if (!ticketmasterActivityTypes.isEmpty()) {
             // One Request with N activity types
-            List<TicketmasterSkiddleActivity> ticketmasterEvents = ticketmasterService.getEventsByActivityTypes(ticketmasterActivityTypes);
-            oneOffEvents.addAll(ticketmasterEvents);
+            CompletableFuture<List<TicketmasterSkiddleActivity>> ticketmasterEvents = ticketmasterService.getEventsByActivityTypes(ticketmasterActivityTypes);
+
+            // Wrap the CompletableFuture into a collection
+            List<CompletableFuture<List<TicketmasterSkiddleActivity>>> ticketmasterFutures =
+                    List.of(ticketmasterEvents);
+
+            futureEventLists.addAll(ticketmasterFutures);
         }
 
+        // Wait for all async processes to complete
+        List<TicketmasterSkiddleActivity> oneOffEvents = futureEventLists.stream()
+                .map(CompletableFuture::join) // Waits for the result of each async call
+                .flatMap(List::stream) // Combines all lists into a single stream
+                .toList();
 
         log.info("Fetched {} one-off activities", oneOffEvents.size());
 

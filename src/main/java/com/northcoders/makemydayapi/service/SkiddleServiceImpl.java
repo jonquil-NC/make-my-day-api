@@ -8,11 +8,13 @@ import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
 import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleActivity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @Slf4j
@@ -37,7 +39,8 @@ public class SkiddleServiceImpl implements SkiddleService {
     }
 
     @Override
-    public List<TicketmasterSkiddleActivity> getEventsByActivityType(OneOffActivityType activityType) {
+    @Async
+    public CompletableFuture<List<TicketmasterSkiddleActivity>> getEventsByActivityType(OneOffActivityType activityType) {
         Integer limit = 10;
 
         log.info("Retrieving {} {} events from Skiddle", limit, activityType);
@@ -59,7 +62,7 @@ public class SkiddleServiceImpl implements SkiddleService {
 
         if (skiddleEvents.isEmpty()) {
             log.info("Retrieved {} events from Skiddle", skiddleEvents.size());
-            return List.of();
+            return CompletableFuture.completedFuture(List.of());
         }
 
         log.info("Retrieved [{} of {}] {} events from Skiddle", skiddleEvents.size(), result.getTotalcount(), activityType);
@@ -75,7 +78,7 @@ public class SkiddleServiceImpl implements SkiddleService {
 
         log.info("Mapped {} {} events to an Activity", activities.size(), activityType);
 
-        return activities;
+        return CompletableFuture.completedFuture(activities);
     }
 }
 

@@ -2,6 +2,7 @@ package com.northcoders.makemydayapi.mapper;
 
 import com.northcoders.makemydayapi.dto.ticketmaster.Event;
 import com.northcoders.makemydayapi.dto.ticketmaster.PriceRange;
+import com.northcoders.makemydayapi.dto.ticketmaster.VenueLocation;
 import com.northcoders.makemydayapi.dto.ticketmaster.enums.TicketmasterSegment;
 import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
 import com.northcoders.makemydayapi.model.activity.oneoff.ResourceType;
@@ -14,29 +15,31 @@ import java.time.LocalTime;
 import java.util.List;
 
 public class TicketmasterResponseMapper {
-//    private static final String LONDON_LAT = "51.5074";
-//    private static final String LONDON_LON = "-0.1278";
+    private static final String LONDON_LAT = "51.5074";
+    private static final String LONDON_LON = "-0.1278";
 
     public final static TicketmasterSkiddleActivity toEntity(Event ticketmasterEvent) {
-        TicketmasterSkiddleLocation venueLocation = TicketmasterSkiddleLocation.builder()
-                .latitude(Double.parseDouble(ticketmasterEvent.getEmbeddedVenues().getVenues().getFirst().getVenueLocation().getLatitude()))
-                .longitude(Double.parseDouble(ticketmasterEvent.getEmbeddedVenues().getVenues().getFirst().getVenueLocation().getLongitude()))
+        VenueLocation venueLocation = ticketmasterEvent.getEmbeddedVenues().getVenues().getFirst().getVenueLocation();
+
+        TicketmasterSkiddleLocation eventLocation = TicketmasterSkiddleLocation.builder()
+                .latitude(venueLocation == null ? Double.parseDouble(LONDON_LAT) : Double.parseDouble(venueLocation.getLatitude()))
+                .longitude(venueLocation == null ? Double.parseDouble(LONDON_LON) : Double.parseDouble(venueLocation.getLongitude()))
                 .build();
 
         TicketmasterSkiddleActivity activity = TicketmasterSkiddleActivity.builder()
 //                .id()
+                .resourceType(ResourceType.TICKETMASTER)
+                .activityType(getActivityType(ticketmasterEvent.getClassifications().getFirst().getSegment().getSegmentName()))
                 .name(ticketmasterEvent.getName())
                 .description(null)
 //                .createdDate()
 //                .updatedDate()
-                .ticketmasterSkiddleLocation(venueLocation)
+                .ticketmasterSkiddleLocation(eventLocation)
                 .isOutdoor(false) // ??
-//                .activityType(getActivityType(ticketmasterEvent.getClassifications().getFirst().getSegment().getSegmentName()))
                 .price(null) // nullable
                 .date(LocalDate.parse(ticketmasterEvent.getDates().getStart().getLocalDate()))
 //                .startTime(LocalTime.parse(ticketmasterEvent.getDates().getStart().getLocalTime()))
 //                .endTime(LocalTime.parse(ticketmasterEvent.getDates().getEnd().getLocalTime()))
-                .resourceType(ResourceType.TICKETMASTER)
 //                .imageUrl(skiddleEvent.getImageurl())
                 .build();
 

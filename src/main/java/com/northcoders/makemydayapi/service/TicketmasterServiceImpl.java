@@ -8,11 +8,13 @@ import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
 import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleActivity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @Slf4j
@@ -34,7 +36,8 @@ public class TicketmasterServiceImpl implements TicketmasterService {
     }
 
     @Override
-    public List<TicketmasterSkiddleActivity> getEventsByActivityType(OneOffActivityType activityType) {
+    @Async
+    public CompletableFuture<List<TicketmasterSkiddleActivity>> getEventsByActivityType(OneOffActivityType activityType) {
         log.info("Retrieving {} events from Ticketmaster", activityType);
 
         TicketmasterResponse result = this.webClient.get()
@@ -54,7 +57,7 @@ public class TicketmasterServiceImpl implements TicketmasterService {
 
         if (ticketmasterEvents.isEmpty()) {
             log.info("Retrieved {} events from Ticketmaster", ticketmasterEvents.size());
-            return List.of();
+            return CompletableFuture.completedFuture(List.of());
         }
 
         log.info("Retrieved {} {} events from Ticketmaster", ticketmasterEvents.size(), activityType);
@@ -75,11 +78,12 @@ public class TicketmasterServiceImpl implements TicketmasterService {
 
         log.info("Mapped {} {} events to an Activity", activities.size(), activityType);
 
-        return activities;
+        return CompletableFuture.completedFuture(activities);
     }
 
     @Override
-    public List<TicketmasterSkiddleActivity> getEventsByActivityTypes(List<OneOffActivityType> activityTypes) {
+    @Async
+    public CompletableFuture<List<TicketmasterSkiddleActivity>> getEventsByActivityTypes(List<OneOffActivityType> activityTypes) {
 
         activityTypes.forEach(activityType -> log.info("Retrieving {} events from Ticketmaster", activityType));
 
@@ -100,9 +104,10 @@ public class TicketmasterServiceImpl implements TicketmasterService {
 
         List<Event> ticketmasterEvents = result.getEmbeddedEvents().getEvents();
 
+
         if (ticketmasterEvents.isEmpty()) {
             log.info("Retrieved {} events from Ticketmaster", ticketmasterEvents.size());
-            return List.of();
+            return CompletableFuture.completedFuture(List.of());
         }
 
         log.info("Retrieved {} events from Ticketmaster", ticketmasterEvents.size());
@@ -111,15 +116,14 @@ public class TicketmasterServiceImpl implements TicketmasterService {
 
         log.info("Mapping {} events to an Activity", ticketmasterEvents.size());
 
-        for (Event ticketMasterEvent : ticketmasterEvents) {
-            TicketmasterSkiddleActivity activity = TicketmasterResponseMapper.toEntity(ticketMasterEvent);
+        ticketmasterEvents.forEach(ticketmasterEvent -> {
+            TicketmasterSkiddleActivity activity = TicketmasterResponseMapper.toEntity(ticketmasterEvent);
             activities.add(activity);
-        }
+        });
 
         log.info("Mapped {} events to an Activity", activities.size());
 
-
-        return activities;
+        return CompletableFuture.completedFuture(activities);
     }
 
     private String getClassificationId(OneOffActivityType activityType) {
