@@ -1,26 +1,23 @@
 package com.northcoders.makemydayapi.controller;
 
 import com.northcoders.makemydayapi.dto.geoapify.Restaurant;
+import com.northcoders.makemydayapi.dto.places.Place;
 import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
 import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleActivity;
-import com.northcoders.makemydayapi.service.ActivityService;
-import com.northcoders.makemydayapi.service.RestaurantService;
-import com.northcoders.makemydayapi.service.SkiddleService;
-import com.northcoders.makemydayapi.service.TicketmasterService;
+import com.northcoders.makemydayapi.service.*;
 import com.northcoders.makemydayapi.validation.constraints.ValidSkiddleActivityType;
 import lombok.extern.java.Log;
 import lombok.extern.log4j.Log4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,8 +38,12 @@ public class ActivityController {
     @Autowired
     private RestaurantService restaurantService;
 
+    @Autowired
+    private PlacesService placesService;
+
+
     @GetMapping("/events")
-    public ResponseEntity<List<TicketmasterSkiddleActivity>> getAllEventsByActivityType(@RequestParam("types") List<OneOffActivityType> activityTypeList) {
+    public ResponseEntity<List<TicketmasterSkiddleActivity>> getAllEventsByActivityType(@RequestParam("types") List<OneOffActivityType> activityTypeList, @RequestParam("date")LocalDate date) {
 
         LOGGER.info("Get all Events ticket master and skiddle, by type [{}]", activityTypeList);
 
@@ -76,6 +77,18 @@ public class ActivityController {
         }
 
         return ResponseEntity.ok(restaurantList);
+    }
+
+    @GetMapping("/places")
+    public ResponseEntity<List<Place>> getAllPlacesByTypes(@RequestParam("types") List<String> placesTypeList) throws Exception {
+        List<Place> placesList = new ArrayList<>();
+
+        for(String type : placesTypeList) {
+            List<Place> tmpList = placesService.getPlaces(type);
+            placesList.addAll(tmpList);
+        }
+
+        return ResponseEntity.ok(placesList);
     }
 
 

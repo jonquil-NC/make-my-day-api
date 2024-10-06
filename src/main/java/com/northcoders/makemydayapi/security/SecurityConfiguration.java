@@ -22,7 +22,10 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/makemyday/sign-in", "/api/v1/makemyday/sign-up").permitAll())
-                .authorizeHttpRequests(authHttp ->  authHttp.requestMatchers("/api/v1/makemyday/events","/api/v1/makemyday/restaurants",
+                .authorizeHttpRequests(authHttp ->  authHttp.requestMatchers(
+                        "/api/v1/makemyday/events",
+                        "/api/v1/makemyday/restaurants",
+                        "/api/v1/makemyday/places",
                         "/api/v1/skiddle/**",
                         "/api/v1/ticketmaster/**",
                         "/api/v1/geoapify/**",
