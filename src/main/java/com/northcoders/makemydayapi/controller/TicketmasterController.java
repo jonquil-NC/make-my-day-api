@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("api/v1/ticketmaster")
@@ -22,10 +23,12 @@ public class TicketmasterController {
     TicketmasterService ticketmasterService;
 
     @GetMapping("/events")
-    public ResponseEntity<List<TicketmasterSkiddleActivity>> getEventsByActivityType(@RequestParam @ValidTicketmasterActivityType OneOffActivityType activityType){
+    public CompletableFuture<ResponseEntity<List<TicketmasterSkiddleActivity>>> getEventsByActivityType(@RequestParam @ValidTicketmasterActivityType OneOffActivityType activityType) {
 
-        List<TicketmasterSkiddleActivity> filteredTicketmasterEvents = ticketmasterService.getEventsByActivityType(activityType);
+        CompletableFuture<List<TicketmasterSkiddleActivity>> filteredTicketmasterEvents = ticketmasterService.getEventsByActivityType(activityType);
 
-        return new ResponseEntity<>(filteredTicketmasterEvents, HttpStatus.OK);
+        return filteredTicketmasterEvents.thenApply(events ->
+                new ResponseEntity<>(events, HttpStatus.OK)
+        );
     }
 }

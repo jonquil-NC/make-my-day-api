@@ -10,9 +10,7 @@ import java.util.concurrent.CompletableFuture;
 
 public interface TicketmasterService {
 
-//    List<Activity> getAllEvents();
-
-    List<TicketmasterSkiddleActivity> getEventsByActivityType(OneOffActivityType activityType);
+    CompletableFuture<List<TicketmasterSkiddleActivity>> getEventsByActivityType(OneOffActivityType activityType);
 
     CompletableFuture<List<TicketmasterSkiddleActivity>> getEventsByActivityTypes(List<OneOffActivityType> activityTypes);
 

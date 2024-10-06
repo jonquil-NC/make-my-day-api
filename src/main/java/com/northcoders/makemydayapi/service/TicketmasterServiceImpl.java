@@ -36,7 +36,8 @@ public class TicketmasterServiceImpl implements TicketmasterService {
     }
 
     @Override
-    public List<TicketmasterSkiddleActivity> getEventsByActivityType(OneOffActivityType activityType) {
+    @Async
+    public CompletableFuture<List<TicketmasterSkiddleActivity>> getEventsByActivityType(OneOffActivityType activityType) {
         log.info("Retrieving {} events from Ticketmaster", activityType);
 
         TicketmasterResponse result = this.webClient.get()
@@ -56,7 +57,7 @@ public class TicketmasterServiceImpl implements TicketmasterService {
 
         if (ticketmasterEvents.isEmpty()) {
             log.info("Retrieved {} events from Ticketmaster", ticketmasterEvents.size());
-            return List.of();
+            return CompletableFuture.completedFuture(List.of());
         }
 
         log.info("Retrieved {} {} events from Ticketmaster", ticketmasterEvents.size(), activityType);
@@ -77,7 +78,7 @@ public class TicketmasterServiceImpl implements TicketmasterService {
 
         log.info("Mapped {} {} events to an Activity", activities.size(), activityType);
 
-        return activities;
+        return CompletableFuture.completedFuture(activities);
     }
 
     @Override
@@ -103,6 +104,7 @@ public class TicketmasterServiceImpl implements TicketmasterService {
 
         List<Event> ticketmasterEvents = result.getEmbeddedEvents().getEvents();
 
+
         if (ticketmasterEvents.isEmpty()) {
             log.info("Retrieved {} events from Ticketmaster", ticketmasterEvents.size());
             return CompletableFuture.completedFuture(List.of());
@@ -114,13 +116,12 @@ public class TicketmasterServiceImpl implements TicketmasterService {
 
         log.info("Mapping {} events to an Activity", ticketmasterEvents.size());
 
-        for (Event ticketMasterEvent : ticketmasterEvents) {
-            TicketmasterSkiddleActivity activity = TicketmasterResponseMapper.toEntity(ticketMasterEvent);
+        ticketmasterEvents.forEach(ticketmasterEvent -> {
+            TicketmasterSkiddleActivity activity = TicketmasterResponseMapper.toEntity(ticketmasterEvent);
             activities.add(activity);
-        }
+        });
 
         log.info("Mapped {} events to an Activity", activities.size());
-
 
         return CompletableFuture.completedFuture(activities);
     }

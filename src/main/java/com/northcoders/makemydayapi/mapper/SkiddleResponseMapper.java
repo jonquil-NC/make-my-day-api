@@ -16,21 +16,18 @@ public class SkiddleResponseMapper {
         TicketmasterSkiddleActivity ticketmasterSkiddleActivity = TicketmasterSkiddleActivity.builder()
 //                .id()
 //                .apiId(skiddleEvent.getId())
+                .resourceType(ResourceType.SKIDDLE)
+                .activityType(getActivityType(skiddleEvent.getEventCode()))
                 .name(skiddleEvent.getEventname())
                 .description(skiddleEvent.getDescription())
 //                .createdDate()
 //                .updatedDate()
                 .ticketmasterSkiddleLocation(venueTicketmasterSkiddleLocation)
                 .isOutdoor(false)
-//                .activityType(skiddleEvent.getEventCode() == null
-//                        ? OneOffActivityType.EVENT // true
-//                        : getActivityType(skiddleEvent.getEventCode()) // false
-//                )
                 .price(null) // nullable
                 .date(skiddleEvent.getDate())
                 .startTime(skiddleEvent.getStartdate().toLocalTime())
                 .endTime(skiddleEvent.getEnddate().toLocalTime())
-                .resourceType(ResourceType.SKIDDLE)
 //                .imageUrl(skiddleEvent.getImageurl())
                 .build();
 
@@ -39,6 +36,10 @@ public class SkiddleResponseMapper {
 
     private static OneOffActivityType getActivityType(String eventCode) {
         OneOffActivityType activityType = null;
+
+        if (eventCode == null) {
+            return OneOffActivityType.EVENT;
+        }
 
         switch (eventCode) {
             case "FEST" -> activityType = OneOffActivityType.FEST;

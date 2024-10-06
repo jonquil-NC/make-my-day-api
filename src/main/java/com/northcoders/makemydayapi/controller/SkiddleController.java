@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("api/v1/skiddle")
@@ -22,11 +23,11 @@ public class SkiddleController {
     private SkiddleService skiddleService;
 
     @GetMapping("/events")
-    public ResponseEntity<List<TicketmasterSkiddleActivity>> getEventsByActivityType(@RequestParam @ValidSkiddleActivityType OneOffActivityType activityType) {
+    public CompletableFuture<ResponseEntity<List<TicketmasterSkiddleActivity>>> getEventsByActivityType(@RequestParam @ValidSkiddleActivityType OneOffActivityType activityType) {
 
-        List<TicketmasterSkiddleActivity> filteredSkiddleEvents = skiddleService.getEventsByActivityType(activityType);
+        CompletableFuture<List<TicketmasterSkiddleActivity>> filteredSkiddleEvents = skiddleService.getEventsByActivityType(activityType);
 
-        return new ResponseEntity<>(filteredSkiddleEvents, HttpStatus.OK);
+        return filteredSkiddleEvents.thenApply(events -> new ResponseEntity<>(events, HttpStatus.OK));
 
     }
 
