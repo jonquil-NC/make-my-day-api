@@ -24,6 +24,7 @@ public class ActivityController {
     @Autowired
     ActivityService activityService;
 
+    @GetMapping
     public ResponseEntity<List<TicketmasterSkiddleActivity>> getEventsByActivityType(@RequestParam(value = "type") List<OneOffActivityType> activityType) {
 
         List<TicketmasterSkiddleActivity> filteredEvents = activityService.getEventsByActivityTypes(activityType);

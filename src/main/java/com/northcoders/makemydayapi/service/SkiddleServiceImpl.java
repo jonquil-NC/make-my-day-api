@@ -40,7 +40,7 @@ public class SkiddleServiceImpl implements SkiddleService {
     public List<TicketmasterSkiddleActivity> getEventsByActivityType(OneOffActivityType activityType) {
         Integer limit = 10;
 
-        log.info("Retrieving {} {} events for Skiddler", limit, activityType);
+        log.info("Retrieving {} {} events for Skiddle", limit, activityType);
 
         SkiddleEventsResult result = this.webClient.get()
                 .uri("/events"
@@ -61,7 +61,7 @@ public class SkiddleServiceImpl implements SkiddleService {
             return List.of();
         }
 
-        log.info("Retrieved [{} of {}] {} events from Skiddler", skiddleEvents.size(), result.getTotalcount(), activityType);
+        log.info("Retrieved [{} of {}] {} events from Skiddle", skiddleEvents.size(), result.getTotalcount(), activityType);
 
         List<TicketmasterSkiddleActivity> activities = new ArrayList<>();
 
