@@ -13,4 +13,6 @@ public interface TicketmasterService {
 
     List<TicketmasterSkiddleActivity> getEventsByActivityType(OneOffActivityType activityType);
 
+    List<TicketmasterSkiddleActivity> getEventsByActivityTypes(List<OneOffActivityType> activityTypes);
+
 }
