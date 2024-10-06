@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,12 +38,14 @@ public class ActivityServiceImpl implements ActivityService {
 
         List<OneOffActivityType> skiddleActivityTypes = activityTypesByResourceType.get(ResourceType.SKIDDLE);
 
-
         List<OneOffActivityType> ticketmasterActivityTypes = activityTypesByResourceType.get(ResourceType.TICKETMASTER);
         log.info("Received {} Skiddle, {} Ticketmaster activity types",
                 skiddleActivityTypes.size(),
                 ticketmasterActivityTypes.size()
         );
+
+        // Async
+        List<CompletableFuture<List<TicketmasterSkiddleActivity>>> futureEventLists = new ArrayList<>();
 
         if (!skiddleActivityTypes.isEmpty()) {
             // Multiple Requests with 1 activity type
@@ -53,9 +57,20 @@ public class ActivityServiceImpl implements ActivityService {
 
         if (!ticketmasterActivityTypes.isEmpty()) {
             // One Request with N activity types
-            List<TicketmasterSkiddleActivity> ticketmasterEvents = ticketmasterService.getEventsByActivityTypes(ticketmasterActivityTypes);
-            oneOffEvents.addAll(ticketmasterEvents);
+            CompletableFuture<List<TicketmasterSkiddleActivity>> ticketmasterEvents = ticketmasterService.getEventsByActivityTypes(ticketmasterActivityTypes);
+//            futureEventLists.addAll(ticketmasterEvents);
+            // Wrap the CompletableFuture into a collection
+            List<CompletableFuture<List<TicketmasterSkiddleActivity>>> ticketmasterFutures =
+                    List.of(ticketmasterEvents);
+
+            futureEventLists.addAll(ticketmasterFutures);
         }
+
+        // Wait for all async processes to complete
+        List<TicketmasterSkiddleActivity> results = futureEventLists.stream()
+                .map(CompletableFuture::join) // Waits for the result of each async call
+                .flatMap(List::stream) // Combines all lists into a single stream
+                .toList();
 
 
         log.info("Fetched {} one-off activities", oneOffEvents.size());
@@ -64,6 +79,6 @@ public class ActivityServiceImpl implements ActivityService {
             return List.of();
         }
 
-        return oneOffEvents;
+        return results;
     }
 }

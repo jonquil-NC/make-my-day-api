@@ -5,6 +5,7 @@ import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleActivity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 
 public interface TicketmasterService {
@@ -13,6 +14,6 @@ public interface TicketmasterService {
 
     List<TicketmasterSkiddleActivity> getEventsByActivityType(OneOffActivityType activityType);
 
-    List<TicketmasterSkiddleActivity> getEventsByActivityTypes(List<OneOffActivityType> activityTypes);
+    CompletableFuture<List<TicketmasterSkiddleActivity>> getEventsByActivityTypes(List<OneOffActivityType> activityTypes);
 
 }
