@@ -35,6 +35,8 @@ public class TicketmasterServiceImpl implements TicketmasterService {
 
     @Override
     public List<TicketmasterSkiddleActivity> getEventsByActivityType(OneOffActivityType activityType) {
+        log.info("Retrieving {} events from Ticketmaster", activityType);
+
         TicketmasterResponse result = this.webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/events")
@@ -50,16 +52,36 @@ public class TicketmasterServiceImpl implements TicketmasterService {
 
         List<Event> ticketmasterEvents = result.getEmbeddedEvents().getEvents();
 
+        if (ticketmasterEvents.isEmpty()) {
+            log.info("Retrieved {} events from Ticketmaster", ticketmasterEvents.size());
+            return List.of();
+        }
+
+        log.info("Retrieved {} {} events from Ticketmaster", ticketmasterEvents.size(), activityType);
+
         List<TicketmasterSkiddleActivity> activities = new ArrayList<>();
+
+        log.info("Mapping {} {} events to an Activity", ticketmasterEvents.size(), activityType);
+
         for (Event ticketMasterEvent : ticketmasterEvents) {
             TicketmasterSkiddleActivity activity = TicketmasterResponseMapper.toEntity(ticketMasterEvent);
             activities.add(activity);
         }
+
+        ticketmasterEvents.forEach(ticketmasterEvent -> {
+            TicketmasterSkiddleActivity ticketmasterSkiddleActivity = TicketmasterResponseMapper.toEntity(ticketmasterEvent);
+            activities.add(ticketmasterSkiddleActivity);
+        });
+
+        log.info("Mapped {} {} events to an Activity", activities.size(), activityType);
+
         return activities;
     }
 
     @Override
     public List<TicketmasterSkiddleActivity> getEventsByActivityTypes(List<OneOffActivityType> activityTypes) {
+
+        activityTypes.forEach(activityType -> log.info("Retrieving {} events from Ticketmaster", activityType));
 
         TicketmasterResponse result = this.webClient.get()
                 .uri(uriBuilder -> {
@@ -78,11 +100,25 @@ public class TicketmasterServiceImpl implements TicketmasterService {
 
         List<Event> ticketmasterEvents = result.getEmbeddedEvents().getEvents();
 
+        if (ticketmasterEvents.isEmpty()) {
+            log.info("Retrieved {} events from Ticketmaster", ticketmasterEvents.size());
+            return List.of();
+        }
+
+        log.info("Retrieved {} events from Ticketmaster", ticketmasterEvents.size());
+
         List<TicketmasterSkiddleActivity> activities = new ArrayList<>();
+
+        log.info("Mapping {} events to an Activity", ticketmasterEvents.size());
+
         for (Event ticketMasterEvent : ticketmasterEvents) {
             TicketmasterSkiddleActivity activity = TicketmasterResponseMapper.toEntity(ticketMasterEvent);
             activities.add(activity);
         }
+
+        log.info("Mapped {} events to an Activity", activities.size());
+
+
         return activities;
     }
 
