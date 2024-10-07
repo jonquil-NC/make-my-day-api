@@ -43,7 +43,7 @@ public class ActivityController {
 
 
     @GetMapping("/events")
-    public ResponseEntity<List<TicketmasterSkiddleActivity>> getAllEventsByActivityType(@RequestParam("types") List<OneOffActivityType> activityTypeList, @RequestParam("date")LocalDate date) {
+    public ResponseEntity<List<TicketmasterSkiddleActivity>> getAllEventsByActivityType(@RequestParam("type") List<OneOffActivityType> activityTypeList) {
 
         LOGGER.info("Get all Events ticket master and skiddle, by type [{}]", activityTypeList);
 
@@ -68,7 +68,7 @@ public class ActivityController {
     }
 
     @GetMapping("/restaurants")
-    public ResponseEntity<List<Restaurant>> getAllRestaurantByCuisineRestaurants(@RequestParam("types") List<String> cuisineTypeList){
+    public ResponseEntity<List<Restaurant>> getAllRestaurantByCuisineRestaurants(@RequestParam("type") List<String> cuisineTypeList){
         List<Restaurant> restaurantList = new ArrayList<>();
 
         for(String type : cuisineTypeList) {
@@ -80,7 +80,7 @@ public class ActivityController {
     }
 
     @GetMapping("/places")
-    public ResponseEntity<List<Place>> getAllPlacesByTypes(@RequestParam("types") List<String> placesTypeList) throws Exception {
+    public ResponseEntity<List<Place>> getAllPlacesByTypes(@RequestParam("type") List<String> placesTypeList) throws Exception {
         List<Place> placesList = new ArrayList<>();
 
         for(String type : placesTypeList) {
