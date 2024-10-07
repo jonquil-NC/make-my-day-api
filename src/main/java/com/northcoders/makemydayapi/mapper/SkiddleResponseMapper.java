@@ -2,6 +2,7 @@ package com.northcoders.makemydayapi.mapper;
 
 import com.northcoders.makemydayapi.dto.activity.oneoff.OneOffActivityResponseVenue;
 import com.northcoders.makemydayapi.dto.skiddle.SkiddleEvent;
+import com.northcoders.makemydayapi.dto.skiddle.SkiddleVenue;
 import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
 import com.northcoders.makemydayapi.model.activity.oneoff.ResourceType;
 import com.northcoders.makemydayapi.dto.activity.oneoff.OneOffActivityResponse;
@@ -9,15 +10,17 @@ import com.northcoders.makemydayapi.dto.activity.oneoff.OneOffActivityResponseLo
 
 public class SkiddleResponseMapper {
     public final static OneOffActivityResponse toResponseDTO(SkiddleEvent skiddleEvent) {
+        SkiddleVenue skiddleEventVenue = skiddleEvent.getVenue();
+
         OneOffActivityResponseLocation responseLocation = OneOffActivityResponseLocation.builder()
-                .latitude(skiddleEvent.getVenue().getLatitude())
-                .longitude(skiddleEvent.getVenue().getLongitude())
+                .latitude(skiddleEventVenue.getLatitude())
+                .longitude(skiddleEventVenue.getLongitude())
                 .build();
 
         OneOffActivityResponseVenue responseVenue = OneOffActivityResponseVenue.builder()
-//                .name()
-//                .address()
-//                .postalCode()
+                .name(skiddleEventVenue.getName())
+                .address(skiddleEventVenue.getAddress())
+                .postalCode(skiddleEventVenue.getPostcode())
                 .build();
 
         OneOffActivityResponse oneOffActivityResponse = OneOffActivityResponse.builder()
