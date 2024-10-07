@@ -30,27 +30,8 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Activity> itinerary;
 
-    public void addActivity(ActivityFieldsService activity){
-
-        if (activity instanceof OngoingActivityFieldsService){
-            itinerary.add(new OngoingActivity(
-                    activity.getName(),
-                    activity.getAddress(),
-                    activity.getImageUrl(),
-                    activity.getIsOutdoor(),
-                    ((OngoingActivityFieldsService) activity).getOngoingActivityType(),
-                    ((OngoingActivityFieldsService) activity).getPhoneNumber(),
-                    ((OngoingActivityFieldsService) activity).getOpeningHours(),
-                    ((OngoingActivityFieldsService) activity).getRating()
-            ));
-        } else {
-            itinerary.add(new Activity(
-                    activity.getName(),
-                    activity.getAddress(),
-                    activity.getImageUrl(),
-                    activity.getIsOutdoor())
-            );
-        }
+    public void addActivity(Activity activity){
+        itinerary.add(activity);
     }
 
     public void deleteActivity(Long id){
