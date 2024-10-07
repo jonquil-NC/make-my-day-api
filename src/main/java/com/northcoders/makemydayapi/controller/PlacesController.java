@@ -15,7 +15,6 @@ public class PlacesController {
 
     @Autowired
     private PlacesService placesService;
-
     /*
     Accepts the following path variables:
         •"park"
