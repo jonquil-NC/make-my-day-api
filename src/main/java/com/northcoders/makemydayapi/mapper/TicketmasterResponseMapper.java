@@ -12,6 +12,8 @@ import com.northcoders.makemydayapi.dto.activity.oneoff.OneOffActivityResponse;
 import com.northcoders.makemydayapi.dto.activity.oneoff.OneOffActivityResponseLocation;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 public class TicketmasterResponseMapper {
@@ -46,8 +48,9 @@ public class TicketmasterResponseMapper {
                 .oneOffActivityResponseLocation(responseLocation)
                 .price(null) // nullable
                 .date(LocalDate.parse(ticketmasterEvent.getDates().getStart().getLocalDate()))
-//                .startTime(LocalTime.parse(ticketmasterEvent.getDates().getStart().getLocalTime()))
+                .startTime(LocalTime.parse(ticketmasterEvent.getDates().getStart().getLocalTime()))
 //                .endTime(LocalTime.parse(ticketmasterEvent.getDates().getEnd().getLocalTime()))
+                .endTime(null)
 //                .imageUrl(skiddleEvent.getImageurl())
                 .build();
 
