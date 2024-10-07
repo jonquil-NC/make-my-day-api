@@ -72,7 +72,7 @@ public class SkiddleServiceImpl implements SkiddleService {
         log.info("Mapping {} {} events to an Activity", skiddleEvents.size(), activityType);
 
         skiddleEvents.forEach(skiddleEvent -> {
-            OneOffActivityResponse oneOffActivityResponse = SkiddleResponseMapper.toEntity(skiddleEvent);
+            OneOffActivityResponse oneOffActivityResponse = SkiddleResponseMapper.toResponseDTO(skiddleEvent);
             activities.add(oneOffActivityResponse);
         });
 

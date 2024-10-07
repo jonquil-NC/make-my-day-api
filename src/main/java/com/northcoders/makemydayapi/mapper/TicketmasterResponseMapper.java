@@ -1,5 +1,6 @@
 package com.northcoders.makemydayapi.mapper;
 
+import com.northcoders.makemydayapi.dto.activity.oneoff.OneOffActivityResponseVenue;
 import com.northcoders.makemydayapi.dto.ticketmaster.Event;
 import com.northcoders.makemydayapi.dto.ticketmaster.PriceRange;
 import com.northcoders.makemydayapi.dto.ticketmaster.VenueLocation;
@@ -16,12 +17,18 @@ public class TicketmasterResponseMapper {
     private static final String LONDON_LAT = "51.5074";
     private static final String LONDON_LON = "-0.1278";
 
-    public final static OneOffActivityResponse toEntity(Event ticketmasterEvent) {
+    public final static OneOffActivityResponse toResponseDTO(Event ticketmasterEvent) {
         VenueLocation venueLocation = ticketmasterEvent.getEmbeddedVenues().getVenues().getFirst().getVenueLocation();
 
-        OneOffActivityResponseLocation eventLocation = OneOffActivityResponseLocation.builder()
+        OneOffActivityResponseLocation responseLocation = OneOffActivityResponseLocation.builder()
                 .latitude(venueLocation == null ? Double.parseDouble(LONDON_LAT) : Double.parseDouble(venueLocation.getLatitude()))
                 .longitude(venueLocation == null ? Double.parseDouble(LONDON_LON) : Double.parseDouble(venueLocation.getLongitude()))
+                .build();
+
+        OneOffActivityResponseVenue responseVenue = OneOffActivityResponseVenue.builder()
+//                .name()
+//                .address()
+//                .postalCode()
                 .build();
 
         OneOffActivityResponse activity = OneOffActivityResponse.builder()
@@ -32,8 +39,9 @@ public class TicketmasterResponseMapper {
                 .description(null)
 //                .createdDate()
 //                .updatedDate()
-                .oneOffActivityResponseLocation(eventLocation)
                 .isOutdoor(false) // ??
+                .venue(responseVenue)
+                .oneOffActivityResponseLocation(responseLocation)
                 .price(null) // nullable
                 .date(LocalDate.parse(ticketmasterEvent.getDates().getStart().getLocalDate()))
 //                .startTime(LocalTime.parse(ticketmasterEvent.getDates().getStart().getLocalTime()))

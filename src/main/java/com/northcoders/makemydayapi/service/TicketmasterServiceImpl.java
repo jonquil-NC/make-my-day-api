@@ -67,12 +67,12 @@ public class TicketmasterServiceImpl implements TicketmasterService {
         log.info("Mapping {} {} events to an Activity", ticketmasterEvents.size(), activityType);
 
         for (Event ticketMasterEvent : ticketmasterEvents) {
-            OneOffActivityResponse activity = TicketmasterResponseMapper.toEntity(ticketMasterEvent);
+            OneOffActivityResponse activity = TicketmasterResponseMapper.toResponseDTO(ticketMasterEvent);
             activities.add(activity);
         }
 
         ticketmasterEvents.forEach(ticketmasterEvent -> {
-            OneOffActivityResponse oneOffActivityResponse = TicketmasterResponseMapper.toEntity(ticketmasterEvent);
+            OneOffActivityResponse oneOffActivityResponse = TicketmasterResponseMapper.toResponseDTO(ticketmasterEvent);
             activities.add(oneOffActivityResponse);
         });
 
@@ -117,7 +117,7 @@ public class TicketmasterServiceImpl implements TicketmasterService {
         log.info("Mapping {} events to an Activity", ticketmasterEvents.size());
 
         ticketmasterEvents.forEach(ticketmasterEvent -> {
-            OneOffActivityResponse activity = TicketmasterResponseMapper.toEntity(ticketmasterEvent);
+            OneOffActivityResponse activity = TicketmasterResponseMapper.toResponseDTO(ticketmasterEvent);
             activities.add(activity);
         });
 
