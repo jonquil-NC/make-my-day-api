@@ -8,13 +8,13 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.concurrent.Executor;
 
 @Configuration
-@EnableAsync
+@EnableAsync(proxyTargetClass = true)
 public class AsyncConfiguration {
     @Bean(name = "taskExecutor")
     public Executor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(2);                    // Set the minimum number of threads (2 threads always running)
-        executor.setMaxPoolSize(2);                     // Limit the maximum number of concurrent threads to 2
+        executor.setMaxPoolSize(5);                     // Limit the maximum number of concurrent threads to 5
         executor.setQueueCapacity(500);                 // Allow up to 500 tasks to queue when threads are busy
         executor.setThreadNamePrefix("APILookup-");     // Set custom thread name prefix for easier debugging
         executor.initialize();                          // Initialize the executor to apply the settings

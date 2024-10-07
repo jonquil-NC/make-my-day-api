@@ -1,6 +1,6 @@
 package com.northcoders.makemydayapi.validatortest;
 
-import com.northcoders.makemydayapi.dto.AuthRequestDTO;
+import com.northcoders.makemydayapi.dto.user.AuthRequestDTO;
 import com.northcoders.makemydayapi.validator.AuthRequestValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

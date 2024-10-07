@@ -2,10 +2,10 @@ package com.northcoders.makemydayapi.usertest;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.northcoders.makemydayapi.controller.UserController;
-import com.northcoders.makemydayapi.dto.AuthRequestDTO;
-import com.northcoders.makemydayapi.dto.UserInfoDTO;
-import com.northcoders.makemydayapi.service.UserServiceImpl;
+import com.northcoders.makemydayapi.controller.user.UserController;
+import com.northcoders.makemydayapi.dto.user.AuthRequestDTO;
+import com.northcoders.makemydayapi.dto.user.UserInfoDTO;
+import com.northcoders.makemydayapi.service.user.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -20,9 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.Mockito.*;
-import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.post;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
 @SpringBootTest
