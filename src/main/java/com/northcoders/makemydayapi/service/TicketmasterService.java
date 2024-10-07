@@ -1,8 +1,7 @@
 package com.northcoders.makemydayapi.service;
 
 import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
-import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleActivity;
-import org.springframework.stereotype.Service;
+import com.northcoders.makemydayapi.dto.activity.oneoff.OneOffActivityResponse;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -10,8 +9,8 @@ import java.util.concurrent.CompletableFuture;
 
 public interface TicketmasterService {
 
-    CompletableFuture<List<TicketmasterSkiddleActivity>> getEventsByActivityType(OneOffActivityType activityType);
+    CompletableFuture<List<OneOffActivityResponse>> getEventsByActivityType(OneOffActivityType activityType);
 
-    CompletableFuture<List<TicketmasterSkiddleActivity>> getEventsByActivityTypes(List<OneOffActivityType> activityTypes);
+    CompletableFuture<List<OneOffActivityResponse>> getEventsByActivityTypes(List<OneOffActivityType> activityTypes);
 
 }
