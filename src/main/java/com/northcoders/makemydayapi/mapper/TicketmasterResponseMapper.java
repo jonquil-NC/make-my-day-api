@@ -3,6 +3,7 @@ package com.northcoders.makemydayapi.mapper;
 import com.northcoders.makemydayapi.dto.activity.oneoff.OneOffActivityResponseVenue;
 import com.northcoders.makemydayapi.dto.ticketmaster.Event;
 import com.northcoders.makemydayapi.dto.ticketmaster.PriceRange;
+import com.northcoders.makemydayapi.dto.ticketmaster.Venue;
 import com.northcoders.makemydayapi.dto.ticketmaster.VenueLocation;
 import com.northcoders.makemydayapi.dto.ticketmaster.enums.TicketmasterSegment;
 import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
@@ -18,7 +19,8 @@ public class TicketmasterResponseMapper {
     private static final String LONDON_LON = "-0.1278";
 
     public final static OneOffActivityResponse toResponseDTO(Event ticketmasterEvent) {
-        VenueLocation venueLocation = ticketmasterEvent.getEmbeddedVenues().getVenues().getFirst().getVenueLocation();
+        Venue ticketmasterEventVenue = ticketmasterEvent.getEmbeddedVenues().getVenues().getFirst();
+        VenueLocation venueLocation = ticketmasterEventVenue.getVenueLocation();
 
         OneOffActivityResponseLocation responseLocation = OneOffActivityResponseLocation.builder()
                 .latitude(venueLocation == null ? Double.parseDouble(LONDON_LAT) : Double.parseDouble(venueLocation.getLatitude()))
@@ -26,9 +28,9 @@ public class TicketmasterResponseMapper {
                 .build();
 
         OneOffActivityResponseVenue responseVenue = OneOffActivityResponseVenue.builder()
-//                .name()
-//                .address()
-//                .postalCode()
+                .name(ticketmasterEventVenue.getName())
+                .address(ticketmasterEventVenue.getVenueAddress().getInfo())
+                .postalCode(ticketmasterEventVenue.getPostalCode())
                 .build();
 
         OneOffActivityResponse activity = OneOffActivityResponse.builder()
