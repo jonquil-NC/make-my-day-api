@@ -13,7 +13,7 @@ public class Venue {
 //    private String type; // "venue"
 //    private String id; // "KovZ9177tC7"
 //    private String locale; // "en-de"
-//    private String postalCode; // "E20 2ST"
+    private String postalCode; // "E20 2ST"
 //    private String timezone; // "Europe/London"
 //    private VenueCity city;
     @JsonProperty(value = "location")

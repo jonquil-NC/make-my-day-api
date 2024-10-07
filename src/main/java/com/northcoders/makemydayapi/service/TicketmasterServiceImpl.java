@@ -5,7 +5,7 @@ import com.northcoders.makemydayapi.dto.ticketmaster.TicketmasterResponse;
 import com.northcoders.makemydayapi.dto.ticketmaster.enums.TicketmasterSegment;
 import com.northcoders.makemydayapi.mapper.TicketmasterResponseMapper;
 import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
-import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleActivity;
+import com.northcoders.makemydayapi.dto.activity.oneoff.OneOffActivityResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
@@ -37,7 +37,7 @@ public class TicketmasterServiceImpl implements TicketmasterService {
 
     @Override
     @Async
-    public CompletableFuture<List<TicketmasterSkiddleActivity>> getEventsByActivityType(OneOffActivityType activityType) {
+    public CompletableFuture<List<OneOffActivityResponse>> getEventsByActivityType(OneOffActivityType activityType) {
         log.info("Retrieving {} events from Ticketmaster", activityType);
 
         TicketmasterResponse result = this.webClient.get()
@@ -62,18 +62,18 @@ public class TicketmasterServiceImpl implements TicketmasterService {
 
         log.info("Retrieved {} {} events from Ticketmaster", ticketmasterEvents.size(), activityType);
 
-        List<TicketmasterSkiddleActivity> activities = new ArrayList<>();
+        List<OneOffActivityResponse> activities = new ArrayList<>();
 
         log.info("Mapping {} {} events to an Activity", ticketmasterEvents.size(), activityType);
 
         for (Event ticketMasterEvent : ticketmasterEvents) {
-            TicketmasterSkiddleActivity activity = TicketmasterResponseMapper.toEntity(ticketMasterEvent);
+            OneOffActivityResponse activity = TicketmasterResponseMapper.toEntity(ticketMasterEvent);
             activities.add(activity);
         }
 
         ticketmasterEvents.forEach(ticketmasterEvent -> {
-            TicketmasterSkiddleActivity ticketmasterSkiddleActivity = TicketmasterResponseMapper.toEntity(ticketmasterEvent);
-            activities.add(ticketmasterSkiddleActivity);
+            OneOffActivityResponse oneOffActivityResponse = TicketmasterResponseMapper.toEntity(ticketmasterEvent);
+            activities.add(oneOffActivityResponse);
         });
 
         log.info("Mapped {} {} events to an Activity", activities.size(), activityType);
@@ -83,7 +83,7 @@ public class TicketmasterServiceImpl implements TicketmasterService {
 
     @Override
     @Async
-    public CompletableFuture<List<TicketmasterSkiddleActivity>> getEventsByActivityTypes(List<OneOffActivityType> activityTypes) {
+    public CompletableFuture<List<OneOffActivityResponse>> getEventsByActivityTypes(List<OneOffActivityType> activityTypes) {
 
         activityTypes.forEach(activityType -> log.info("Retrieving {} events from Ticketmaster", activityType));
 
@@ -112,12 +112,12 @@ public class TicketmasterServiceImpl implements TicketmasterService {
 
         log.info("Retrieved {} events from Ticketmaster", ticketmasterEvents.size());
 
-        List<TicketmasterSkiddleActivity> activities = new ArrayList<>();
+        List<OneOffActivityResponse> activities = new ArrayList<>();
 
         log.info("Mapping {} events to an Activity", ticketmasterEvents.size());
 
         ticketmasterEvents.forEach(ticketmasterEvent -> {
-            TicketmasterSkiddleActivity activity = TicketmasterResponseMapper.toEntity(ticketmasterEvent);
+            OneOffActivityResponse activity = TicketmasterResponseMapper.toEntity(ticketmasterEvent);
             activities.add(activity);
         });
 

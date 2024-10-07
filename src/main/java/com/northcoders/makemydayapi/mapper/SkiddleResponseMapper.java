@@ -3,17 +3,17 @@ package com.northcoders.makemydayapi.mapper;
 import com.northcoders.makemydayapi.dto.skiddle.SkiddleEvent;
 import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
 import com.northcoders.makemydayapi.model.activity.oneoff.ResourceType;
-import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleActivity;
-import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleLocation;
+import com.northcoders.makemydayapi.dto.activity.oneoff.OneOffActivityResponse;
+import com.northcoders.makemydayapi.dto.activity.oneoff.OneOffActivityResponseLocation;
 
 public class SkiddleResponseMapper {
-    public final static TicketmasterSkiddleActivity toEntity(SkiddleEvent skiddleEvent) {
-        TicketmasterSkiddleLocation venueTicketmasterSkiddleLocation = TicketmasterSkiddleLocation.builder()
+    public final static OneOffActivityResponse toEntity(SkiddleEvent skiddleEvent) {
+        OneOffActivityResponseLocation venueOneOffActivityResponseLocation = OneOffActivityResponseLocation.builder()
                 .latitude(skiddleEvent.getVenue().getLatitude())
                 .longitude(skiddleEvent.getVenue().getLongitude())
                 .build();
 
-        TicketmasterSkiddleActivity ticketmasterSkiddleActivity = TicketmasterSkiddleActivity.builder()
+        OneOffActivityResponse oneOffActivityResponse = OneOffActivityResponse.builder()
 //                .id()
 //                .apiId(skiddleEvent.getId())
                 .resourceType(ResourceType.SKIDDLE)
@@ -22,7 +22,7 @@ public class SkiddleResponseMapper {
                 .description(skiddleEvent.getDescription())
 //                .createdDate()
 //                .updatedDate()
-                .ticketmasterSkiddleLocation(venueTicketmasterSkiddleLocation)
+                .oneOffActivityResponseLocation(venueOneOffActivityResponseLocation)
                 .isOutdoor(false)
                 .price(null) // nullable
                 .date(skiddleEvent.getDate())
@@ -31,7 +31,7 @@ public class SkiddleResponseMapper {
 //                .imageUrl(skiddleEvent.getImageurl())
                 .build();
 
-        return ticketmasterSkiddleActivity;
+        return oneOffActivityResponse;
     }
 
     private static OneOffActivityType getActivityType(String eventCode) {

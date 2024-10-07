@@ -1,15 +1,13 @@
 package com.northcoders.makemydayapi.service;
 
-import com.northcoders.makemydayapi.mapper.SkiddleResponseMapper;
 import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
 import com.northcoders.makemydayapi.model.activity.oneoff.ResourceType;
-import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleActivity;
+import com.northcoders.makemydayapi.dto.activity.oneoff.OneOffActivityResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -26,7 +24,7 @@ public class ActivityServiceImpl implements ActivityService {
     TicketmasterService ticketmasterService;
 
     @Override
-    public List<TicketmasterSkiddleActivity> getEventsByActivityTypes(List<OneOffActivityType> activityTypes) {
+    public List<OneOffActivityResponse> getEventsByActivityTypes(List<OneOffActivityType> activityTypes) {
         if (activityTypes.isEmpty()) {
             return List.of();
         }
@@ -43,14 +41,14 @@ public class ActivityServiceImpl implements ActivityService {
         );
 
         // Async
-        List<CompletableFuture<List<TicketmasterSkiddleActivity>>> futureEventLists = new ArrayList<>();
+        List<CompletableFuture<List<OneOffActivityResponse>>> futureEventLists = new ArrayList<>();
 
         if (!skiddleActivityTypes.isEmpty()) {
             // Multiple Requests with 1 activity type
             skiddleActivityTypes.forEach(oneOffActivityType -> {
-                CompletableFuture<List<TicketmasterSkiddleActivity>> skiddleEvents = skiddleService.getEventsByActivityType(oneOffActivityType);
+                CompletableFuture<List<OneOffActivityResponse>> skiddleEvents = skiddleService.getEventsByActivityType(oneOffActivityType);
 
-                List<CompletableFuture<List<TicketmasterSkiddleActivity>>> skiddleFutures =
+                List<CompletableFuture<List<OneOffActivityResponse>>> skiddleFutures =
                         List.of(skiddleEvents);
 
                 futureEventLists.addAll(skiddleFutures);
@@ -59,17 +57,17 @@ public class ActivityServiceImpl implements ActivityService {
 
         if (!ticketmasterActivityTypes.isEmpty()) {
             // One Request with N activity types
-            CompletableFuture<List<TicketmasterSkiddleActivity>> ticketmasterEvents = ticketmasterService.getEventsByActivityTypes(ticketmasterActivityTypes);
+            CompletableFuture<List<OneOffActivityResponse>> ticketmasterEvents = ticketmasterService.getEventsByActivityTypes(ticketmasterActivityTypes);
 
             // Wrap the CompletableFuture into a collection
-            List<CompletableFuture<List<TicketmasterSkiddleActivity>>> ticketmasterFutures =
+            List<CompletableFuture<List<OneOffActivityResponse>>> ticketmasterFutures =
                     List.of(ticketmasterEvents);
 
             futureEventLists.addAll(ticketmasterFutures);
         }
 
         // Wait for all async processes to complete
-        List<TicketmasterSkiddleActivity> oneOffEvents = futureEventLists.stream()
+        List<OneOffActivityResponse> oneOffEvents = futureEventLists.stream()
                 .map(CompletableFuture::join) // Waits for the result of each async call
                 .flatMap(List::stream) // Combines all lists into a single stream
                 .toList();

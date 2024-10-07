@@ -1,13 +1,13 @@
 package com.northcoders.makemydayapi.service;
 
 import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
-import com.northcoders.makemydayapi.model.dto.TicketmasterSkiddleActivity;
+import com.northcoders.makemydayapi.dto.activity.oneoff.OneOffActivityResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public interface ActivityService {
-    List<TicketmasterSkiddleActivity> getEventsByActivityTypes(List<OneOffActivityType> activityTypes);
+    List<OneOffActivityResponse> getEventsByActivityTypes(List<OneOffActivityType> activityTypes);
 
 }
