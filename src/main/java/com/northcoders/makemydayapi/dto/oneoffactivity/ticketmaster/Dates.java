@@ -18,9 +18,9 @@ public class Dates {
     @NoArgsConstructor
     public static class Start {
 
-        private String localDate;
-
-        private String localTime;
+        private String localDate;   // "2024-10-01"
+        private String localTime;   // "19:00:00"
+        private String dateTime;    // "2024-10-01T18:00:00Z"
 
     }
 
@@ -28,12 +28,12 @@ public class Dates {
 //    "dates": {
 //        "start": {
 //            "localDate": "2024-10-01",
-//                    "localTime": "19:00:00",
-//                    "dateTime": "2024-10-01T18:00:00Z",
-//                    "dateTBD": false,
-//                    "dateTBA": false,
-//                    "timeTBA": false,
-//                    "noSpecificTime": false
+//            "localTime": "19:00:00",
+//            "dateTime": "2024-10-01T18:00:00Z",
+//            "dateTBD": false,
+//            "dateTBA": false,
+//            "timeTBA": false,
+//            "noSpecificTime": false
 //        },
 //        "timezone": "Europe/London",
 //                "status": {

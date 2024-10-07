@@ -5,7 +5,7 @@ import com.northcoders.makemydayapi.dto.oneoffactivity.skiddle.SkiddleEvent;
 import com.northcoders.makemydayapi.dto.oneoffactivity.skiddle.SkiddleEventsResult;
 import com.northcoders.makemydayapi.mapper.activity.SkiddleResponseMapper;
 import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
-import com.northcoders.makemydayapi.dto.oneoffactivity.TicketmasterSkiddleActivity;
+import com.northcoders.makemydayapi.dto.activity.oneoff.OneOffActivityResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
@@ -40,7 +40,7 @@ public class SkiddleServiceImpl implements SkiddleService {
 
     @Override
     @Async
-    public CompletableFuture<List<TicketmasterSkiddleActivity>> getEventsByActivityType(OneOffActivityType activityType) {
+    public CompletableFuture<List<OneOffActivityResponse>> getEventsByActivityType(OneOffActivityType activityType) {
         Integer limit = 10;
 
         log.info("Retrieving {} {} events from Skiddle", limit, activityType);
@@ -67,13 +67,13 @@ public class SkiddleServiceImpl implements SkiddleService {
 
         log.info("Retrieved [{} of {}] {} events from Skiddle", skiddleEvents.size(), result.getTotalcount(), activityType);
 
-        List<TicketmasterSkiddleActivity> activities = new ArrayList<>();
+        List<OneOffActivityResponse> activities = new ArrayList<>();
 
         log.info("Mapping {} {} events to an Activity", skiddleEvents.size(), activityType);
 
         skiddleEvents.forEach(skiddleEvent -> {
-            TicketmasterSkiddleActivity ticketmasterSkiddleActivity = SkiddleResponseMapper.toEntity(skiddleEvent);
-            activities.add(ticketmasterSkiddleActivity);
+            OneOffActivityResponse oneOffActivityResponse = SkiddleResponseMapper.toResponseDTO(skiddleEvent);
+            activities.add(oneOffActivityResponse);
         });
 
         log.info("Mapped {} {} events to an Activity", activities.size(), activityType);
