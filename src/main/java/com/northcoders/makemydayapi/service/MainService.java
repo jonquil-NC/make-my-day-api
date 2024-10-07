@@ -1,6 +1,6 @@
 package com.northcoders.makemydayapi.service;
 
-import com.northcoders.makemydayapi.dto.oneoffactivity.TicketmasterSkiddleActivity;
+import com.northcoders.makemydayapi.dto.activity.oneoff.OneOffActivityResponse;
 import com.northcoders.makemydayapi.dto.ongoingactivity.geoapify.Restaurant;
 import com.northcoders.makemydayapi.dto.ongoingactivity.places.Place;
 import com.northcoders.makemydayapi.dto.user.SearchParams;
@@ -46,7 +46,7 @@ public class MainService {
 
         List<CompletableFuture<List<Place>>> futurePlaces = new ArrayList<>();
         List<CompletableFuture<List<Restaurant>>> futureRestaurants = new ArrayList<>();
-        List<CompletableFuture<List<TicketmasterSkiddleActivity>>> futureEvents = new ArrayList<>();
+        List<CompletableFuture<List<OneOffActivityResponse>>> futureEvents = new ArrayList<>();
 
         if (searchParams.parks){
             CompletableFuture<List<Place>> parks = placesService.getPlaces("parks");

@@ -1,7 +1,7 @@
 package com.northcoders.makemydayapi.controller.oneoffactivity;
 
+import com.northcoders.makemydayapi.dto.activity.oneoff.OneOffActivityResponse;
 import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
-import com.northcoders.makemydayapi.dto.oneoffactivity.TicketmasterSkiddleActivity;
 import com.northcoders.makemydayapi.service.oneoffactivity.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,9 +22,9 @@ public class ActivityController {
     ActivityService activityService;
 
     @GetMapping
-    public CompletableFuture<ResponseEntity<List<TicketmasterSkiddleActivity>>> getEventsByActivityType(@RequestParam(value = "type") List<OneOffActivityType> activityType) {
+    public CompletableFuture<ResponseEntity<List<OneOffActivityResponse>>> getEventsByActivityType(@RequestParam(value = "type") List<OneOffActivityType> activityType) {
 
-        CompletableFuture<List<TicketmasterSkiddleActivity>> filteredEvents = activityService.getEventsByActivityTypes(activityType);
+        CompletableFuture<List<OneOffActivityResponse>> filteredEvents = activityService.getEventsByActivityTypes(activityType);
 
         return filteredEvents.thenApply(e -> new ResponseEntity<>(e, HttpStatus.OK));
 

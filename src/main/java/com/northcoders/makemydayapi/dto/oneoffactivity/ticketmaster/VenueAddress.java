@@ -1,4 +1,4 @@
-package com.northcoders.makemydayapi.dto.ticketmaster;
+package com.northcoders.makemydayapi.dto.oneoffactivity.ticketmaster;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

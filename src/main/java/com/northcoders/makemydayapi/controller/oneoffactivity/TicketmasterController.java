@@ -1,7 +1,6 @@
 package com.northcoders.makemydayapi.controller.oneoffactivity;
 
 import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
-import com.northcoders.makemydayapi.dto.oneoffactivity.TicketmasterSkiddleActivity;
 import com.northcoders.makemydayapi.service.oneoffactivity.TicketmasterService;
 import com.northcoders.makemydayapi.dto.activity.oneoff.OneOffActivityResponse;
 import com.northcoders.makemydayapi.service.oneoffactivity.TicketmasterService;

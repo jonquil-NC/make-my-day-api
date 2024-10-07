@@ -1,7 +1,7 @@
 package com.northcoders.makemydayapi.service.oneoffactivity;
 
 import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
-import com.northcoders.makemydayapi.dto.oneoffactivity.TicketmasterSkiddleActivity;
+import com.northcoders.makemydayapi.dto.activity.oneoff.OneOffActivityResponse;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +12,6 @@ import java.util.concurrent.CompletableFuture;
 public interface ActivityService {
 
     @Async
-    CompletableFuture<List<TicketmasterSkiddleActivity>> getEventsByActivityTypes(List<OneOffActivityType> activityTypes);
+    CompletableFuture<List<OneOffActivityResponse>> getEventsByActivityTypes(List<OneOffActivityType> activityTypes);
 
 }
