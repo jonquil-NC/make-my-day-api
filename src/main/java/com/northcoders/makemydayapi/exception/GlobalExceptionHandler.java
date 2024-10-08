@@ -1,5 +1,6 @@
 package com.northcoders.makemydayapi.exception;
 
+import com.northcoders.makemydayapi.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponse;
@@ -16,6 +17,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiErrorResponse> handleInvalidEmailException(InvalidEmailException ex) {
         ApiErrorResponse errorResponse = new ApiErrorResponse("Invalid email. Please try again.", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ApiErrorResponse> handleUserNotFoundException(UserNotFoundException e) {
+        ApiErrorResponse errorResponse;
+        errorResponse = new ApiErrorResponse("NotFound: %s".formatted(User.class.getSimpleName()), e.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
