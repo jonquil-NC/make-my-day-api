@@ -37,15 +37,15 @@ public class ActivityServiceImpl implements ActivityService {
         List<OneOffActivityType> skiddleActivityTypes = activityTypesByResourceType.get(ResourceType.SKIDDLE);
 
         List<OneOffActivityType> ticketmasterActivityTypes = activityTypesByResourceType.get(ResourceType.TICKETMASTER);
-        log.info("Received {} Skiddle, {} Ticketmaster activity types",
-                skiddleActivityTypes.size(),
-                ticketmasterActivityTypes.size()
-        );
+//        log.info("Received {} Skiddle, {} Ticketmaster activity types",
+//                skiddleActivityTypes.size(),
+//                ticketmasterActivityTypes.size()
+//        );
 
         // Async
         List<CompletableFuture<List<OneOffActivityResponse>>> futureEventLists = new ArrayList<>();
 
-        if (!skiddleActivityTypes.isEmpty()) {
+        if (skiddleActivityTypes != null) {
             // Multiple Requests with 1 activity type
             skiddleActivityTypes.forEach(oneOffActivityType -> {
                 CompletableFuture<List<OneOffActivityResponse>> skiddleEvents = skiddleService.getEventsByActivityType(oneOffActivityType);
@@ -57,7 +57,7 @@ public class ActivityServiceImpl implements ActivityService {
             });
         }
 
-        if (!ticketmasterActivityTypes.isEmpty()) {
+        if (ticketmasterActivityTypes != null) {
             // One Request with N activity types
             CompletableFuture<List<OneOffActivityResponse>> ticketmasterEvents = ticketmasterService.getEventsByActivityTypes(ticketmasterActivityTypes);
 

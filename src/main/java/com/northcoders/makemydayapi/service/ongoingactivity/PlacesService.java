@@ -138,7 +138,7 @@ public class PlacesService {
             List<Place> places = new ArrayList<>();
 
             for (JsonNode placeNode : placesNode) {
-                name = placeNode.get("displayName").get("text").asText();
+                name = placeNode.get("displayName").get("text").asText().replaceAll(",", "");
 
                 StringBuilder openingHoursBuilder = new StringBuilder();
 

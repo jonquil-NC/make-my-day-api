@@ -24,4 +24,12 @@ public class OneOffActivity extends Activity {
     String date;
     String price;
 
+    public OneOffActivity(String name, String address, String imageUrl, boolean isOutdoor,
+                          OneOffActivityType activityType, String startTime, String date, String price) {
+        super(name, address, imageUrl, isOutdoor);
+        this.activityType = activityType;
+        this.startTime = startTime;
+        this.date = date;
+        this.price = price;
+    }
 }

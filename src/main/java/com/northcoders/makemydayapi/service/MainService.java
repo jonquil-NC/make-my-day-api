@@ -5,6 +5,8 @@ import com.northcoders.makemydayapi.dto.ongoingactivity.geoapify.Restaurant;
 import com.northcoders.makemydayapi.dto.ongoingactivity.places.Place;
 import com.northcoders.makemydayapi.dto.user.SearchParams;
 import com.northcoders.makemydayapi.model.activity.Activity;
+import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivity;
+import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
 import com.northcoders.makemydayapi.model.activity.ongoing.OngoingActivity;
 import com.northcoders.makemydayapi.service.oneoffactivity.ActivityServiceImpl;
 import com.northcoders.makemydayapi.service.ongoingactivity.PlacesService;
@@ -41,6 +43,19 @@ public class MainService {
         );
     }
 
+    public OneOffActivity parseOneOffActivity(OneOffActivityFieldsService oneOffActivity){
+        return new OneOffActivity(
+                oneOffActivity.getName(),
+                oneOffActivity.getAddress(),
+                oneOffActivity.getImageUrl(),
+                oneOffActivity.getIsOutdoor(),
+                oneOffActivity.getOneOffActivityType(),
+                oneOffActivity.getStartTime(),
+                oneOffActivity.getDate(),
+                oneOffActivity.getPrice()
+        );
+    }
+
     public List<Activity> getActivities(SearchParams searchParams) throws Exception {
         List<Activity> activities = new ArrayList<>();
 
@@ -66,10 +81,10 @@ public class MainService {
             }
         }
         if (searchParams.liveEvents != null){
-            for (int i = 0; i < searchParams.liveEvents.size(); i++) {
-                // TODO: create OneOffActivityType (enum) out of the string
-                futureEvents.add(activityServiceImpl.getEventsByActivityTypes(null));
-            }
+            List<OneOffActivityType> searchTypes = searchParams.liveEvents.stream()
+                    .map(s -> OneOffActivityType.valueOf(s.toUpperCase()))
+                    .toList();
+            futureEvents.add(activityServiceImpl.getEventsByActivityTypes(searchTypes));
         }
 
         List<Place> places = futurePlaces.stream()
@@ -88,7 +103,13 @@ public class MainService {
             activities.add(parseOngoingActivity(r));
         }
 
-        // TODO: make OneOffActivity interface and parse method
+        List<OneOffActivityResponse> liveEvents = futureEvents.stream()
+                .map(CompletableFuture::join)
+                .flatMap(List::stream)
+                .toList();
+        for (OneOffActivityResponse e : liveEvents){
+            activities.add(parseOneOffActivity(e));
+        }
 
         return activities;
     }

@@ -3,6 +3,7 @@ package com.northcoders.makemydayapi.dto.activity.oneoff;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.northcoders.makemydayapi.model.activity.oneoff.OneOffActivityType;
 import com.northcoders.makemydayapi.model.activity.oneoff.ResourceType;
+import com.northcoders.makemydayapi.service.OneOffActivityFieldsService;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -15,7 +16,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OneOffActivityResponse {
+public class OneOffActivityResponse implements OneOffActivityFieldsService {
 
 //    @JsonProperty(value = "id")
 //    private Long id;
@@ -58,5 +59,51 @@ public class OneOffActivityResponse {
 
     @JsonProperty(value = "end_time")
     private LocalTime endTime;
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public OneOffActivityType getOneOffActivityType() {
+        return activityType;
+    }
+
+    @Override
+    public String getAddress() {
+        return venue.getName()
+                .concat(" ")
+                .concat(venue.getAddress().replaceAll(venue.getName(), ""))
+                .concat(" ")
+                .concat(venue.getPostalCode())
+                .replaceAll("  ", " ");
+    }
+
+    @Override
+    public String getImageUrl() {
+        return null;
+    }
+
+    @Override
+    public boolean getIsOutdoor() {
+        return isOutdoor;
+    }
+
+    @Override
+    public String getStartTime(){
+        return startTime.toString();
+    };
+
+    @Override
+    public String getDate(){
+        return date.toString();
+    };
+
+    @Override
+    public String getPrice(){
+        return price;
+    };
+
 
 }
