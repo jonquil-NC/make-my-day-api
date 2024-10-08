@@ -1,12 +1,12 @@
 package com.northcoders.makemydayapi.usertest;
 
-import com.northcoders.makemydayapi.dto.AuthRequestDTO;
-import com.northcoders.makemydayapi.dto.UserInfoDTO;
+import com.northcoders.makemydayapi.dto.user.AuthRequestDTO;
+import com.northcoders.makemydayapi.dto.user.UserInfoDTO;
 import com.northcoders.makemydayapi.exception.UserAlreadyExistsException;
-import com.northcoders.makemydayapi.mapper.AuthRequestMapper;
+import com.northcoders.makemydayapi.mapper.user.AuthRequestMapper;
 import com.northcoders.makemydayapi.model.User;
 import com.northcoders.makemydayapi.repository.UserRepository;
-import com.northcoders.makemydayapi.service.UserServiceImpl;
+import com.northcoders.makemydayapi.service.user.UserServiceImpl;
 import com.northcoders.makemydayapi.validator.AuthRequestValidator;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

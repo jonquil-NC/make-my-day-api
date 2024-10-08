@@ -1,11 +1,9 @@
 package com.northcoders.makemydayapi.validator;
 
-import com.northcoders.makemydayapi.dto.AuthRequestDTO;
-import jakarta.validation.Valid;
+import com.northcoders.makemydayapi.dto.user.AuthRequestDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import java.util.regex.Matcher;

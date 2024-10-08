@@ -1,6 +1,5 @@
 package com.northcoders.makemydayapi.model.activity.ongoing;
 
-import com.northcoders.makemydayapi.dto.OngoingActivityFieldsService;
 import com.northcoders.makemydayapi.model.activity.Activity;
 import jakarta.persistence.*;
 import lombok.*;

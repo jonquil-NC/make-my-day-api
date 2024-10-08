@@ -1,7 +1,6 @@
 package com.northcoders.makemydayapi.security;
 
-import com.northcoders.makemydayapi.dto.LoginRequestDTO;
-import io.jsonwebtoken.Claims;
+import com.northcoders.makemydayapi.dto.user.LoginRequestDTO;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,8 +10,6 @@ import org.springframework.security.core.Authentication;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
-
-import static javax.crypto.Cipher.SECRET_KEY;
 
 @Configuration
 public class JwtConfiguration {

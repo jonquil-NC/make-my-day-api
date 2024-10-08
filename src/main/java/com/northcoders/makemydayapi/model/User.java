@@ -1,7 +1,7 @@
 package com.northcoders.makemydayapi.model;
 
-import com.northcoders.makemydayapi.dto.ActivityFieldsService;
-import com.northcoders.makemydayapi.dto.OngoingActivityFieldsService;
+import com.northcoders.makemydayapi.service.ActivityFieldsService;
+import com.northcoders.makemydayapi.service.OngoingActivityFieldsService;
 import com.northcoders.makemydayapi.model.activity.Activity;
 import com.northcoders.makemydayapi.model.activity.ongoing.OngoingActivity;
 import jakarta.persistence.*;
@@ -30,27 +30,8 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Activity> itinerary;
 
-    public void addActivity(ActivityFieldsService activity){
-
-        if (activity instanceof OngoingActivityFieldsService){
-            itinerary.add(new OngoingActivity(
-                    activity.getName(),
-                    activity.getAddress(),
-                    activity.getImageUrl(),
-                    activity.getIsOutdoor(),
-                    ((OngoingActivityFieldsService) activity).getOngoingActivityType(),
-                    ((OngoingActivityFieldsService) activity).getPhoneNumber(),
-                    ((OngoingActivityFieldsService) activity).getOpeningHours(),
-                    ((OngoingActivityFieldsService) activity).getRating()
-            ));
-        } else {
-            itinerary.add(new Activity(
-                    activity.getName(),
-                    activity.getAddress(),
-                    activity.getImageUrl(),
-                    activity.getIsOutdoor())
-            );
-        }
+    public void addActivity(Activity activity){
+        itinerary.add(activity);
     }
 
     public void deleteActivity(Long id){
