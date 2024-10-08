@@ -28,7 +28,7 @@ public class ActivityServiceImpl implements ActivityService {
     @Async
     public CompletableFuture<List<OneOffActivityResponse>> getEventsByActivityTypes(List<OneOffActivityType> activityTypes) {
         if (activityTypes.isEmpty()) {
-            return CompletableFuture.supplyAsync(() -> List.of());
+            return CompletableFuture.completedFuture(List.of());
         }
 
         Map<ResourceType, List<OneOffActivityType>> activityTypesByResourceType = activityTypes.stream()
@@ -77,9 +77,9 @@ public class ActivityServiceImpl implements ActivityService {
         log.info("Fetched {} one-off activities", oneOffEvents.size());
 
         if (oneOffEvents.isEmpty()) {
-            return CompletableFuture.supplyAsync(() -> List.of());
+            return CompletableFuture.completedFuture(List.of());
         }
 
-        return CompletableFuture.supplyAsync(() -> oneOffEvents);
+        return CompletableFuture.completedFuture(oneOffEvents);
     }
 }

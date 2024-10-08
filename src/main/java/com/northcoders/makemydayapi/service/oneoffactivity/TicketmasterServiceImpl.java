@@ -57,7 +57,7 @@ public class TicketmasterServiceImpl implements TicketmasterService {
 
         if (ticketmasterEvents.isEmpty()) {
             log.info("Retrieved {} events from Ticketmaster", ticketmasterEvents.size());
-            return CompletableFuture.supplyAsync(() -> List.of());
+            return CompletableFuture.completedFuture(List.of());
         }
 
         log.info("Retrieved {} {} events from Ticketmaster", ticketmasterEvents.size(), activityType);
@@ -78,7 +78,7 @@ public class TicketmasterServiceImpl implements TicketmasterService {
 
         log.info("Mapped {} {} events to an Activity", activities.size(), activityType);
 
-        return CompletableFuture.supplyAsync(() -> activities);
+        return CompletableFuture.completedFuture(activities);
     }
 
     @Override
@@ -123,7 +123,7 @@ public class TicketmasterServiceImpl implements TicketmasterService {
 
         log.info("Mapped {} events to an Activity", activities.size());
 
-        return CompletableFuture.supplyAsync(() -> activities);
+        return CompletableFuture.completedFuture(activities);
     }
 
     private String getClassificationId(OneOffActivityType activityType) {
