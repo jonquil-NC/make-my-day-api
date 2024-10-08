@@ -9,7 +9,8 @@ Make My Day API is a RESTful backend application that allows users to search for
 * Technologies
 * Features
 * Installation
-* API Endpoints
+* API Endpoint
+* Internal API calls
 * Error Handling
 
 ## **Technologies**
@@ -18,14 +19,11 @@ Make My Day API is a RESTful backend application that allows users to search for
 * Spring Boot
 * Spring Security
 * Spring Web
-* H2 Database
 * PostgreSQL
-* Maven
 * JWT (JSON Web Tokens)
 * Jackson
 * GSON
 * OkHttp
-* Lombok
 * Validation
 
 ## **Features**
@@ -43,9 +41,20 @@ Make My Day API is a RESTful backend application that allows users to search for
 5. Build the application
 6. Run the application 
 
-## **API Endpoints**
+## **Main API Endpoint**
 
-The Make My Day API provides several REST endpoints to manage activities, places, events, and user interactions. Below is a list of the main controllers and their corresponding endpoints.
+Main API Endpoint
+The Make My Day API provides a single endpoint for retrieving activities from external services like Ticketmaster, Skiddle, as well as fetching relevant places and restaurants. This endpoint coordinates the internal API calls based on user search parameters.
+
+###### POST Method
+
+Base URL: /api/v1
+
+* Description: This is the main endpoint the frontend calls to retrieve a list of activities based on user search parameters.
+* Request Body: Accepts a SearchParams object to filter activities.
+* Response: A list of filtered activities.
+
+## **Internal API Calls**
 
 ### Activities
 
