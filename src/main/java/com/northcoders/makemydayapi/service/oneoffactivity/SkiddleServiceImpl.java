@@ -78,7 +78,7 @@ public class SkiddleServiceImpl implements SkiddleService {
 
         log.info("Mapped {} {} events to an Activity", activities.size(), activityType);
 
-        return CompletableFuture.supplyAsync(() -> activities);
+        return CompletableFuture.completedFuture(activities);
     }
 }
 
