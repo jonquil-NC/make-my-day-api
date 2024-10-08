@@ -1,0 +1,25 @@
+body {
+    background: #FF6464;
+    color: #01024E;
+    display: grid;
+    font-family: Futura;
+    padding: 40px;
+    width: 100%;
+    font-size: 25px;
+    border: 1px solid #aaaaaa;
+    border-radius: 10px;
+    -webkit-appearance: none;
+}
+
+
+button:hover {
+    opacity: 0.8
+}
+
+#form-select {
+    width: 100%;
+}
+
+button:focus{
+    outline: none !important;
+}

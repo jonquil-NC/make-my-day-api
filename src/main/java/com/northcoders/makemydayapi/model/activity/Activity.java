@@ -32,5 +32,4 @@ public class Activity {
         this.imageUrl = imageUrl;
         this.isOutdoor = isOutdoor;
     }
-
 }

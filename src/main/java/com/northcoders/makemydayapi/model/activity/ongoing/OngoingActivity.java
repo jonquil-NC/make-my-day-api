@@ -29,5 +29,9 @@ public class OngoingActivity extends Activity  {
         this.openingHours = openingHours;
         this.rating = rating;
     }
+    public String getType(){
+        return "Ongoing";
+    }
+
 
 }
